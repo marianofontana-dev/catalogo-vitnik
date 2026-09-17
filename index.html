@@ -111,18 +111,13 @@
     }
 
     .card img {
-      width: 100%;
-      height: auto;
-      display: block;
+      width: 100%; height: auto; display: block;
       transition: transform 0.4s ease;
     }
     
     .card-video-iframe {
-      width: 100%;
-      aspect-ratio: 9 / 16;
-      border: none;
-      display: block;
-      pointer-events: none;
+      width: 100%; aspect-ratio: 9 / 16;
+      border: none; display: block; pointer-events: none;
     }
     
     .card:hover img, .card:hover .card-video-iframe { transform: scale(1.02); }
@@ -131,13 +126,8 @@
       position: absolute;
       top: 0; left: 0; right: 0; bottom: 0;
       background: rgba(0,0,0,0.15);
-      display: flex;
-      align-items: flex-end;
-      justify-content: flex-end;
-      padding: 15px;
-      opacity: 0;
-      transition: opacity 0.25s ease;
-      z-index: 2;
+      display: flex; align-items: flex-end; justify-content: flex-end;
+      padding: 15px; opacity: 0; transition: opacity 0.25s ease; z-index: 2;
     }
     .card:hover .card-overlay { opacity: 1; }
     
@@ -163,24 +153,17 @@
       max-width: 900px; width: 100%; max-height: 90vh;
       display: flex; overflow: hidden;
       box-shadow: 0 20px 50px rgba(0,0,0,0.4); position: relative;
-      transition: all 0.3s ease;
     }
     @media (max-width: 750px) { .modal-card { flex-direction: column; max-height: 90vh; overflow-y: auto; } }
 
     .modal-media-container {
       flex: 1.2; background: #000;
       display: flex; align-items: center; justify-content: center;
-      overflow: hidden; position: relative;
-      min-height: 350px;
+      overflow: hidden; position: relative; min-height: 350px;
     }
     
-    .modal-media-container img {
-      width: 100%; height: 100%; object-fit: contain; max-height: 80vh;
-    }
-    
-    .modal-media-container iframe {
-      width: 100%; height: 100%; min-height: 500px; border: none; display: block;
-    }
+    .modal-media-container img { width: 100%; height: 100%; object-fit: contain; max-height: 80vh; }
+    .modal-media-container iframe { width: 100%; height: 100%; min-height: 500px; border: none; display: block; }
 
     .modal-content {
       flex: 1; padding: 35px 30px;
@@ -201,13 +184,41 @@
     .modal-header h3 { font-size: 18px; font-weight: 700; color: #111; margin-bottom: 10px; word-break: break-word; }
     .modal-header p { font-size: 13px; color: #666; line-height: 1.5; }
 
+    /* Botones de acción en el modal */
+    .modal-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
     .modal-download-btn {
+      flex: 1;
       background: #e60000; color: #ffffff; text-decoration: none;
       text-align: center; padding: 14px; border-radius: 30px;
-      font-size: 13px; font-weight: 700; margin-top: 20px;
+      font-size: 13px; font-weight: 700;
       box-shadow: 0 6px 18px rgba(230,0,0,0.3); transition: background 0.2s;
+      display: flex; align-items: center; justify-content: center;
     }
     .modal-download-btn:hover { background: #cc0000; }
+
+    .modal-share-btn {
+      background: #111111; color: #ffffff; border: none;
+      padding: 14px 20px; border-radius: 30px;
+      font-size: 13px; font-weight: 700; cursor: pointer;
+      display: flex; align-items: center; gap: 6px;
+      transition: background 0.2s, transform 0.1s;
+    }
+    .modal-share-btn:hover { background: #333333; }
+    .modal-share-btn svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+    /* Notificación flotante de enlace copiado */
+    .toast-notification {
+      position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px);
+      background: #111; color: #fff; padding: 12px 24px; border-radius: 30px;
+      font-size: 13px; font-weight: 600; box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+      opacity: 0; transition: all 0.3s ease; z-index: 10000; pointer-events: none;
+    }
+    .toast-notification.active { transform: translateX(-50%) translateY(0); opacity: 1; }
 
     #loading { text-align: center; color: #888; margin-top: 60px; font-weight: 500; font-size: 15px; }
     .spinner {
@@ -249,15 +260,27 @@
           <h3 id="modal-title">Nombre del recurso</h3>
           <p>Material audiovisual en alta resolución para uso en redes sociales y difusión comercial Vitnik.</p>
         </div>
-        <a id="modal-download" href="#" target="_blank" class="modal-download-btn">Descargar recurso original</a>
+        
+        <div class="modal-actions">
+          <a id="modal-download" href="#" target="_blank" class="modal-download-btn">Descargar recurso original</a>
+          <button class="modal-share-btn" onclick="shareCurrentResource()">
+            <svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+            Compartir
+          </button>
+        </div>
       </div>
     </div>
   </div>
+
+  <!-- Notificación Toast -->
+  <div class="toast-notification" id="toast">¡Enlace copiado al portapapeles!</div>
 
   <script>
     const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzwKpvIcEsnysyRZYN2gBY4UTbSza4v_pCJhXQX1rE1NXtABRQ2tGkxYJQQpqKs655S/exec';
 
     let historyStack = [];
+    let currentOpenedFile = null;
+    let allFilesFlatList = [];
 
     const folderSvgIcon = `
       <svg viewBox="0 0 24 24">
@@ -288,6 +311,18 @@
         renderBreadcrumb();
         renderFolders(data.folders || []);
         renderFiles(data.files || []);
+
+        // Guardar la lista global para poder abrir links compartidos
+        if (data.files) {
+          data.files.forEach(f => {
+            if (!allFilesFlatList.some(item => item.id === f.id)) {
+              allFilesFlatList.push(f);
+            }
+          });
+        }
+
+        // Si la URL contiene un ID especifico al cargar la pagina, abrirlo
+        checkUrlParamAndOpenModal();
 
       } catch (err) {
         loading.innerHTML = 'Error al cargar los materiales gráficos.';
@@ -333,9 +368,7 @@
         let mediaHTML = '';
         if (file.isVideo) {
           const embedUrl = `https://drive.google.com/file/d/${file.id}/preview`;
-          mediaHTML = `
-            <iframe class="card-video-iframe" src="${embedUrl}"></iframe>
-          `;
+          mediaHTML = `<iframe class="card-video-iframe" src="${embedUrl}"></iframe>`;
         } else {
           mediaHTML = `<img src="${file.previewUrl}" alt="${file.name}" loading="lazy">`;
         }
@@ -354,6 +387,7 @@
     }
 
     function openModal(file) {
+      currentOpenedFile = file;
       const box = document.getElementById('modal-media-box');
       if (file.isVideo) {
         const embedUrl = `https://drive.google.com/file/d/${file.id}/preview`;
@@ -365,12 +399,60 @@
       document.getElementById('modal-title').textContent = file.name;
       document.getElementById('modal-download').href = file.downloadUrl;
       document.getElementById('modal-backdrop').classList.add('active');
+
+      // Actualizar la URL de la ventana sin recargar la página
+      const newUrl = `${window.location.origin}${window.location.pathname}?id=${file.id}`;
+      window.history.pushState({ path: newUrl }, '', newUrl);
     }
 
     function closeModal(e) {
       if (!e || e.target.id === 'modal-backdrop' || e.target.className === 'modal-close') {
         document.getElementById('modal-backdrop').classList.remove('active');
         document.getElementById('modal-media-box').innerHTML = '';
+        currentOpenedFile = null;
+
+        // Limpiar parámetro de la URL
+        const cleanUrl = `${window.location.origin}${window.location.pathname}`;
+        window.history.pushState({ path: cleanUrl }, '', cleanUrl);
+      }
+    }
+
+    /* Función para compartir el recurso */
+    function shareCurrentResource() {
+      if (!currentOpenedFile) return;
+
+      const shareUrl = `${window.location.origin}${window.location.pathname}?id=${currentOpenedFile.id}`;
+      const shareData = {
+        title: `Vitnik - ${currentOpenedFile.name}`,
+        text: `Descargá el recurso "${currentOpenedFile.name}" del Banco de Imágenes Vitnik:`,
+        url: shareUrl
+      };
+
+      // Si el navegador soporta el menú nativo de compartir (Celulares / Chrome moderno)
+      if (navigator.share) {
+        navigator.share(shareData).catch(() => {});
+      } else {
+        // En PCs de escritorio, copia directamente la URL al portapapeles
+        navigator.clipboard.writeText(shareUrl).then(() => {
+          showToast();
+        });
+      }
+    }
+
+    function showToast() {
+      const toast = document.getElementById('toast');
+      toast.classList.add('active');
+      setTimeout(() => toast.classList.remove('active'), 2500);
+    }
+
+    function checkUrlParamAndOpenModal() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const fileId = urlParams.get('id');
+      if (fileId && allFilesFlatList.length > 0) {
+        const fileToOpen = allFilesFlatList.find(f => f.id === fileId);
+        if (fileToOpen) {
+          openModal(fileToOpen);
+        }
       }
     }
 
