@@ -130,7 +130,7 @@
 
     .card-title { font-size: 12px; font-weight: 600; color: #333; margin-top: 8px; padding-left: 2px; }
 
-    /* Modal Principal */
+    /* Modal Compacto y Moderno */
     .modal-backdrop {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px);
@@ -142,19 +142,19 @@
 
     .modal-card {
       background: #ffffff; border-radius: 24px;
-      max-width: 900px; width: 100%; height: 85vh;
+      max-width: 780px; width: 100%; height: 82vh;
       display: flex; overflow: hidden;
       box-shadow: 0 20px 50px rgba(0,0,0,0.6); position: relative;
     }
 
-    .modal-card.is-vertical { max-width: 800px; }
+    .modal-card.is-vertical { max-width: 680px; }
 
     @media (max-width: 750px) {
       .modal-card { flex-direction: column; height: 92vh; overflow-y: auto; }
     }
 
     .modal-media-container {
-      flex: 1.5; background: #000;
+      flex: 2; background: #000;
       display: flex; align-items: center; justify-content: center;
       position: relative; overflow: hidden; height: 100%;
     }
@@ -162,10 +162,15 @@
     .modal-media-container img { width: 100%; height: 100%; object-fit: contain; }
     .modal-media-container iframe { width: 100%; height: 100%; border: none; display: block; }
 
+    /* Contenido Lateral Ajustado / Sin Espacios Blancos Inútiles */
     .modal-content {
-      flex: 1; padding: 30px 25px;
+      width: 260px; padding: 25px 20px;
       display: flex; flex-direction: column; justify-content: space-between;
-      min-width: 280px; background: #fff;
+      background: #fff; flex-shrink: 0;
+    }
+
+    @media (max-width: 750px) {
+      .modal-content { width: 100%; padding: 20px; }
     }
     
     .modal-close {
@@ -178,14 +183,13 @@
     }
     .modal-close:hover { background: #f0f0f0; }
 
-    .modal-header h3 { font-size: 16px; font-weight: 700; color: #111; margin-bottom: 8px; word-break: break-word; }
-    .modal-header p { font-size: 12px; color: #666; line-height: 1.5; }
+    .modal-header h3 { font-size: 15px; font-weight: 700; color: #111; word-break: break-word; line-height: 1.3; }
 
-    .modal-actions { display: flex; gap: 10px; margin-top: 20px; }
+    .modal-actions { display: flex; flex-direction: column; gap: 8px; margin-top: 15px; }
 
     .modal-download-btn {
-      flex: 1; background: #e60000; color: #ffffff; text-decoration: none;
-      text-align: center; padding: 12px; border-radius: 30px;
+      width: 100%; background: #e60000; color: #ffffff; text-decoration: none;
+      text-align: center; padding: 11px; border-radius: 30px;
       font-size: 12px; font-weight: 700;
       box-shadow: 0 4px 14px rgba(230,0,0,0.3); transition: background 0.2s;
       display: flex; align-items: center; justify-content: center;
@@ -193,15 +197,15 @@
     .modal-download-btn:hover { background: #cc0000; }
 
     .modal-share-btn {
-      background: #111111; color: #ffffff; border: none;
-      padding: 12px 18px; border-radius: 30px;
+      width: 100%; background: #111111; color: #ffffff; border: none;
+      padding: 11px; border-radius: 30px;
       font-size: 12px; font-weight: 700; cursor: pointer;
-      display: flex; align-items: center; gap: 6px;
+      display: flex; align-items: center; justify-content: center; gap: 6px;
     }
     .modal-share-btn:hover { background: #333333; }
     .modal-share-btn svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2; }
 
-    /* Modal Custom de Compartir Estilo Pinterest */
+    /* Sub-Modal Custom Compartir */
     .share-modal-backdrop {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background: rgba(0,0,0,0.4);
@@ -213,16 +217,16 @@
 
     .share-card {
       background: #ffffff; border-radius: 20px;
-      padding: 24px; width: 340px; text-align: center;
+      padding: 24px; width: 320px; text-align: center;
       box-shadow: 0 10px 30px rgba(0,0,0,0.25);
       transform: scale(0.95); transition: transform 0.2s ease;
     }
     .share-modal-backdrop.active .share-card { transform: scale(1); }
 
-    .share-card h4 { font-size: 15px; font-weight: 700; margin-bottom: 18px; color: #111; }
+    .share-card h4 { font-size: 14px; font-weight: 700; margin-bottom: 16px; color: #111; }
 
     .share-options {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 20px;
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 18px;
     }
 
     .share-opt-btn {
@@ -231,7 +235,7 @@
     }
 
     .share-icon-circle {
-      width: 48px; height: 48px; border-radius: 50%;
+      width: 44px; height: 44px; border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
       color: #fff; transition: transform 0.2s ease;
     }
@@ -245,14 +249,14 @@
       display: flex; background: #f1f1f1; border-radius: 12px; padding: 4px; overflow: hidden;
     }
     .share-link-input-group input {
-      flex: 1; border: none; background: transparent; padding: 8px 10px; font-size: 11px; color: #555; outline: none;
+      flex: 1; border: none; background: transparent; padding: 6px 8px; font-size: 11px; color: #555; outline: none;
     }
     .share-link-input-group button {
-      background: #111; color: #fff; border: none; padding: 6px 14px; border-radius: 8px; font-size: 11px; font-weight: 700; cursor: pointer;
+      background: #111; color: #fff; border: none; padding: 6px 12px; border-radius: 8px; font-size: 11px; font-weight: 700; cursor: pointer;
     }
 
     .share-close-btn {
-      margin-top: 15px; background: transparent; border: none; font-size: 12px; font-weight: 600; color: #888; cursor: pointer;
+      margin-top: 14px; background: transparent; border: none; font-size: 11px; font-weight: 600; color: #888; cursor: pointer;
     }
 
     .toast-notification {
@@ -301,7 +305,6 @@
       <div class="modal-content">
         <div class="modal-header">
           <h3 id="modal-title">Nombre del recurso</h3>
-          <p>Material audiovisual en alta resolución para uso en redes sociales y difusión comercial Vitnik.</p>
         </div>
         
         <div class="modal-actions">
@@ -315,28 +318,28 @@
     </div>
   </div>
 
-  <!-- Sub-Modal Custom de Compartir -->
+  <!-- Sub-Modal Compartir -->
   <div class="share-modal-backdrop" id="share-modal-backdrop" onclick="closeShareModal()">
     <div class="share-card" onclick="event.stopPropagation()">
       <h4>Compartir recurso</h4>
       <div class="share-options">
         <button class="share-opt-btn" onclick="shareToWhatsApp()">
           <div class="share-icon-circle bg-whatsapp">
-            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
+            <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
           </div>
           WhatsApp
         </button>
 
         <button class="share-opt-btn" onclick="copyShareUrl()">
           <div class="share-icon-circle bg-copy">
-            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
           </div>
           Copiar Link
         </button>
 
         <button class="share-opt-btn" onclick="shareToEmail()">
           <div class="share-icon-circle bg-email">
-            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
           </div>
           Email
         </button>
@@ -398,7 +401,6 @@
           });
         }
 
-        // Solo evalúa abrir modal si el usuario entra directo desde un enlace compartido
         if (!isNavigatingHistory && historyStack.length === 1) {
           checkUrlParamAndOpenModal();
         }
@@ -503,7 +505,6 @@
       }
     }
 
-    /* Sub-Modal de Compartir */
     function openShareModal() {
       if (!currentOpenedFile) return;
       const shareUrl = `${window.location.origin}${window.location.pathname}?id=${currentOpenedFile.id}`;
@@ -518,7 +519,7 @@
     function shareToWhatsApp() {
       if (!currentOpenedFile) return;
       const shareUrl = `${window.location.origin}${window.location.pathname}?id=${currentOpenedFile.id}`;
-      const text = encodeURIComponent(`Mirá este recurso de Vitnik: ${currentOpenedFile.name}\n${shareUrl}`);
+      const text = encodeURIComponent(`Vitnik - ${currentOpenedFile.name}\n${shareUrl}`);
       window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
     }
 
@@ -526,7 +527,7 @@
       if (!currentOpenedFile) return;
       const shareUrl = `${window.location.origin}${window.location.pathname}?id=${currentOpenedFile.id}`;
       const subject = encodeURIComponent(`Vitnik - ${currentOpenedFile.name}`);
-      const body = encodeURIComponent(`Podés ver y descargar el recurso en el siguiente enlace:\n\n${shareUrl}`);
+      const body = encodeURIComponent(`Accedé al recurso en el siguiente enlace:\n\n${shareUrl}`);
       window.location.href = `mailto:?subject=${subject}&body=${body}`;
     }
 
