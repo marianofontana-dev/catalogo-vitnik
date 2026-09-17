@@ -62,12 +62,12 @@
     .breadcrumb span:hover { color: #e60000; }
     .breadcrumb-separator { color: #ccc; font-size: 11px; }
 
-    /* Carpetas estilo Píldora */
+    /* Carpetas estilo Pinterest / Píldoras */
     .folders-grid {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 12px;
+      gap: 10px;
       margin-bottom: 35px;
       max-width: 1200px;
       margin-left: auto;
@@ -75,25 +75,38 @@
     }
     .folder-card {
       background: #ffffff;
-      border: 1px solid #e2e8f0;
-      border-radius: 20px;
-      padding: 10px 18px;
+      border: 1px solid #e0e0e0;
+      border-radius: 24px;
+      padding: 10px 20px;
       display: flex;
       align-items: center;
       gap: 8px;
       cursor: pointer;
       font-size: 13px;
       font-weight: 600;
-      color: #2d3748;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.03);
-      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      color: #222222;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+      transition: all 0.2s ease;
+    }
+    .folder-card svg {
+      width: 16px;
+      height: 16px;
+      fill: none;
+      stroke: #555555;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      transition: stroke 0.2s ease;
     }
     .folder-card:hover {
       background: #111111;
       color: #ffffff;
       border-color: #111111;
       transform: translateY(-2px);
-      box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+    }
+    .folder-card:hover svg {
+      stroke: #ffffff;
     }
 
     /* Grilla estilo Pinterest */
@@ -120,7 +133,7 @@
       position: relative;
       overflow: hidden;
       width: 100%;
-      border-radius: 16px;
+      border-radius: 18px;
       background-color: #f1f1f1;
       box-shadow: 0 4px 15px rgba(0,0,0,0.04);
     }
@@ -132,7 +145,7 @@
     }
     .card:hover img { transform: scale(1.03); }
 
-    /* Botón flotante al pasar el mouse */
+    /* Overlay al pasar el cursor */
     .card-overlay {
       position: absolute;
       top: 0; left: 0; right: 0; bottom: 0;
@@ -164,7 +177,7 @@
       padding-left: 2px;
     }
 
-    /* Modal Estilo Vitnik */
+    /* Modal */
     .modal-backdrop {
       position: fixed;
       top: 0; left: 0; width: 100%; height: 100%;
@@ -288,7 +301,7 @@
     Cargando catálogo...
   </div>
 
-  <!-- Modal Emergente -->
+  <!-- Modal -->
   <div class="modal-backdrop" id="modal-backdrop" onclick="closeModal(event)">
     <div class="modal-card" onclick="event.stopPropagation()">
       <button class="modal-close" onclick="closeModal()">✕</button>
@@ -309,6 +322,13 @@
     const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzwKpvIcEsnysyRZYN2gBY4UTbSza4v_pCJhXQX1rE1NXtABRQ2tGkxYJQQpqKs655S/exec';
 
     let historyStack = [];
+
+    // Ícono SVG vectorial de carpeta minimalista
+    const folderSvgIcon = `
+      <svg viewBox="0 0 24 24">
+        <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+      </svg>
+    `;
 
     async function loadFolder(folderId = null) {
       const loading = document.getElementById('loading');
@@ -356,7 +376,7 @@
         folders.forEach(f => {
           const card = document.createElement('div');
           card.className = 'folder-card';
-          card.innerHTML = `<span>📁</span> <span>${f.name}</span>`;
+          card.innerHTML = `${folderSvgIcon} <span>${f.name}</span>`;
           card.onclick = () => {
             historyStack.push({ id: f.id, name: f.name });
             loadFolder(f.id);
