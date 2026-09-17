@@ -4,14 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Catálogo Oficial | Vitnik</title>
-  <!-- Fuente tipográfica Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       background-color: #f8f9fa;
@@ -19,23 +17,13 @@
       padding: 30px 20px;
       -webkit-font-smoothing: antialiased;
     }
-
-    /* Encabezado con Logo clicable a Home */
-    header {
-      text-align: center;
-      margin-bottom: 30px;
-    }
-    
+    header { text-align: center; margin-bottom: 30px; }
     .brand-logo {
       cursor: pointer;
       display: inline-block;
       transition: transform 0.2s ease, opacity 0.2s ease;
     }
-    .brand-logo:hover {
-      transform: scale(1.03);
-      opacity: 0.9;
-    }
-    
+    .brand-logo:hover { transform: scale(1.03); opacity: 0.9; }
     .brand-title {
       font-size: 28px;
       font-weight: 800;
@@ -51,13 +39,7 @@
       text-transform: uppercase;
       margin-top: 4px;
     }
-
-    /* Breadcrumbs estilo Píldoras */
-    .breadcrumb-container {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 25px;
-    }
+    .breadcrumb-container { display: flex; justify-content: center; margin-bottom: 25px; }
     .breadcrumb {
       display: inline-flex;
       align-items: center;
@@ -71,21 +53,10 @@
       color: #666;
       flex-wrap: wrap;
     }
-    .breadcrumb span {
-      cursor: pointer;
-      color: #111;
-      font-weight: 600;
-      transition: color 0.2s;
-    }
-    .breadcrumb span:hover {
-      color: #e60000;
-    }
-    .breadcrumb-separator {
-      color: #ccc;
-      font-size: 11px;
-    }
+    .breadcrumb span { cursor: pointer; color: #111; font-weight: 600; transition: color 0.2s; }
+    .breadcrumb span:hover { color: #e60000; }
+    .breadcrumb-separator { color: #ccc; font-size: 11px; }
 
-    /* Grilla de carpetas estilo Píldoras */
     .folders-grid {
       display: flex;
       flex-wrap: wrap;
@@ -119,7 +90,6 @@
       box-shadow: 0 6px 15px rgba(0,0,0,0.1);
     }
 
-    /* Grilla estilo Pinterest (Masonry) */
     .masonry-grid {
       column-count: 4;
       column-gap: 20px;
@@ -130,7 +100,6 @@
     @media (max-width: 850px)  { .masonry-grid { column-count: 2; column-gap: 15px; } }
     @media (max-width: 500px)  { .masonry-grid { column-count: 1; } }
 
-    /* Tarjetas de producto */
     .card {
       break-inside: avoid;
       margin-bottom: 20px;
@@ -143,42 +112,12 @@
       display: flex;
       flex-direction: column;
     }
-    .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 12px 30px rgba(0,0,0,0.12);
-    }
-    
-    .card-img-wrapper {
-      position: relative;
-      overflow: hidden;
-      width: 100%;
-      background-color: #f1f1f1;
-    }
-    .card img {
-      width: 100%;
-      height: auto;
-      display: block;
-      transition: transform 0.4s ease;
-    }
-    .card:hover img {
-      transform: scale(1.04);
-    }
-
-    .card-info {
-      padding: 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      background: #ffffff;
-    }
-    .card-title {
-      font-size: 13px;
-      font-weight: 600;
-      color: #333333;
-      line-height: 1.4;
-      word-break: break-word;
-    }
-    
+    .card:hover { transform: translateY(-5px); box-shadow: 0 12px 30px rgba(0,0,0,0.12); }
+    .card-img-wrapper { position: relative; overflow: hidden; width: 100%; background-color: #f1f1f1; }
+    .card img { width: 100%; height: auto; display: block; transition: transform 0.4s ease; }
+    .card:hover img { transform: scale(1.04); }
+    .card-info { padding: 16px; display: flex; flex-direction: column; gap: 12px; background: #ffffff; }
+    .card-title { font-size: 13px; font-weight: 600; color: #333333; line-height: 1.4; word-break: break-word; }
     .download-btn {
       text-align: center;
       background: #111111;
@@ -194,18 +133,9 @@
       align-items: center;
       justify-content: center;
     }
-    .download-btn:hover {
-      background: #333333;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    }
+    .download-btn:hover { background: #333333; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
 
-    #loading {
-      text-align: center;
-      color: #888;
-      margin-top: 60px;
-      font-weight: 500;
-      font-size: 15px;
-    }
+    #loading { text-align: center; color: #888; margin-top: 60px; font-weight: 500; font-size: 15px; }
     .spinner {
       width: 32px;
       height: 32px;
@@ -221,7 +151,7 @@
 <body>
 
   <header>
-    <div class="brand-logo" onclick="navigateTo(-1)">
+    <div class="brand-logo" onclick="navigateToHome()">
       <div class="brand-title">VITNIK</div>
       <div class="brand-subtitle">Catálogo Oficial</div>
     </div>
@@ -236,100 +166,107 @@
   
   <div id="loading">
     <div class="spinner"></div>
-    Sincronizando catálogo...
+    Cargando contenido...
   </div>
 
   <script>
     const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzwKpvIcEsnysyRZYN2gBY4UTbSza4v_pCJhXQX1rE1NXtABRQ2tGkxYJQQpqKs655S/exec';
 
-    let driveData = null;
-    let currentPath = [];
+    let historyStack = [];
 
-    async function init() {
-      try {
-        const response = await fetch(APPS_SCRIPT_URL, { method: 'GET', redirect: 'follow' });
-        driveData = await response.json();
-        document.getElementById('loading').style.display = 'none';
-        render();
-      } catch (err) {
-        document.getElementById('loading').textContent = 'Error al sincronizar con Google Drive.';
-      }
-    }
-
-    function getCurrentFolder() {
-      let current = driveData;
-      for (const folderName of currentPath) {
-        if (current && current.folders) {
-          current = current.folders.find(f => f.name === folderName);
-        }
-      }
-      return current;
-    }
-
-    function render() {
-      const current = getCurrentFolder();
+    async function loadFolder(folderId = null) {
+      const loading = document.getElementById('loading');
       const foldersContainer = document.getElementById('folders-container');
       const filesContainer = document.getElementById('files-container');
-      const breadcrumb = document.getElementById('breadcrumb');
-
-      if (!current) return;
-
+      
+      loading.style.display = 'block';
       foldersContainer.innerHTML = '';
       filesContainer.innerHTML = '';
 
-      // Breadcrumb render
-      let breadcrumbHTML = `<span onclick="navigateTo(-1)">Inicio</span>`;
-      currentPath.forEach((name, index) => {
-        breadcrumbHTML += `<span class="breadcrumb-separator">/</span><span onclick="navigateTo(${index})">${name}</span>`;
+      try {
+        const url = folderId ? `${APPS_SCRIPT_URL}?folderId=${folderId}` : APPS_SCRIPT_URL;
+        const response = await fetch(url, { method: 'GET', redirect: 'follow' });
+        const data = await response.json();
+
+        loading.style.display = 'none';
+
+        if (historyStack.length === 0) {
+          historyStack.push({ id: data.id, name: 'Inicio' });
+        }
+
+        renderBreadcrumb();
+        renderFolders(data.folders || []);
+        renderFiles(data.files || []);
+
+      } catch (err) {
+        loading.innerHTML = 'Error al cargar los datos de Google Drive.';
+      }
+    }
+
+    function renderBreadcrumb() {
+      const breadcrumb = document.getElementById('breadcrumb');
+      let html = '';
+      historyStack.forEach((item, index) => {
+        if (index > 0) html += `<span class="breadcrumb-separator">/</span>`;
+        html += `<span onclick="navigateToIndex(${index})">${item.name}</span>`;
       });
-      breadcrumb.innerHTML = breadcrumbHTML;
+      breadcrumb.innerHTML = html;
+    }
 
-      // Render carpetas
-      if (current.folders && current.folders.length > 0) {
-        foldersContainer.style.display = 'flex';
-        current.folders.forEach(subfolder => {
-          const folderCard = document.createElement('div');
-          folderCard.className = 'folder-card';
-          folderCard.innerHTML = `<span>📁</span> <span>${subfolder.name}</span>`;
-          folderCard.onclick = () => {
-            currentPath.push(subfolder.name);
-            render();
-          };
-          foldersContainer.appendChild(folderCard);
-        });
-      } else {
-        foldersContainer.style.display = 'none';
-      }
-
-      // Render archivos / productos
-      if (current.files) {
-        current.files.forEach(file => {
+    function renderFolders(folders) {
+      const container = document.getElementById('folders-container');
+      if (folders.length > 0) {
+        container.style.display = 'flex';
+        folders.forEach(f => {
           const card = document.createElement('div');
-          card.className = 'card';
-          card.innerHTML = `
-            <div class="card-img-wrapper">
-              <img src="${file.previewUrl}" alt="${file.name}" loading="lazy" onerror="this.src='https://via.placeholder.com/400x600?text=Vista+Previa'">
-            </div>
-            <div class="card-info">
-              <div class="card-title">${file.name}</div>
-              <a href="${file.downloadUrl}" target="_blank" class="download-btn">Descargar</a>
-            </div>
-          `;
-          filesContainer.appendChild(card);
+          card.className = 'folder-card';
+          card.innerHTML = `<span>📁</span> <span>${f.name}</span>`;
+          card.onclick = () => {
+            historyStack.push({ id: f.id, name: f.name });
+            loadFolder(f.id);
+          };
+          container.appendChild(card);
         });
-      }
-    }
-
-    function navigateTo(index) {
-      if (index === -1) {
-        currentPath = [];
       } else {
-        currentPath = currentPath.slice(0, index + 1);
+        container.style.display = 'none';
       }
-      render();
     }
 
-    init();
+    function renderFiles(files) {
+      const container = document.getElementById('files-container');
+      files.forEach(file => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+          <div class="card-img-wrapper">
+            <img src="${file.previewUrl}" alt="${file.name}" loading="lazy" onerror="this.src='https://via.placeholder.com/400x600?text=Vista+Previa'">
+          </div>
+          <div class="card-info">
+            <div class="card-title">${file.name}</div>
+            <a href="${file.downloadUrl}" target="_blank" class="download-btn">Descargar</a>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function navigateToIndex(index) {
+      historyStack = historyStack.slice(0, index + 1);
+      const targetFolder = historyStack[historyStack.length - 1];
+      loadFolder(targetFolder.id);
+    }
+
+    function navigateToHome() {
+      if (historyStack.length > 0) {
+        const home = historyStack[0];
+        historyStack = [home];
+        loadFolder(home.id);
+      } else {
+        loadFolder();
+      }
+    }
+
+    loadFolder();
   </script>
 </body>
 </html>
