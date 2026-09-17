@@ -4,10 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Catálogo Oficial | Vitnik</title>
-  <!-- Fuente tipográfica moderna -->
+  <!-- Fuente tipográfica Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -78,14 +78,14 @@
       transition: color 0.2s;
     }
     .breadcrumb span:hover {
-      color: #e60000; /* Color distintivo al hover */
+      color: #e60000;
     }
     .breadcrumb-separator {
       color: #ccc;
       font-size: 11px;
     }
 
-    /* Grilla de carpetas estilo Píldora / Chips */
+    /* Grilla de carpetas estilo Píldoras */
     .folders-grid {
       display: flex;
       flex-wrap: wrap;
@@ -118,11 +118,8 @@
       transform: translateY(-2px);
       box-shadow: 0 6px 15px rgba(0,0,0,0.1);
     }
-    .folder-icon {
-      font-size: 16px;
-    }
 
-    /* Grilla estilo Pinterest pura (Masonry) */
+    /* Grilla estilo Pinterest (Masonry) */
     .masonry-grid {
       column-count: 4;
       column-gap: 20px;
@@ -196,14 +193,12 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 6px;
     }
     .download-btn:hover {
       background: #333333;
       box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     }
 
-    /* Estado de carga */
     #loading {
       text-align: center;
       color: #888;
@@ -241,7 +236,7 @@
   
   <div id="loading">
     <div class="spinner"></div>
-    Cargando catálogo...
+    Sincronizando catálogo...
   </div>
 
   <script>
@@ -252,12 +247,12 @@
 
     async function init() {
       try {
-        const response = await fetch(APPS_SCRIPT_URL, { redirect: 'follow' });
+        const response = await fetch(APPS_SCRIPT_URL, { method: 'GET', redirect: 'follow' });
         driveData = await response.json();
         document.getElementById('loading').style.display = 'none';
         render();
       } catch (err) {
-        document.getElementById('loading').innerHTML = 'Error al sincronizar con Google Drive.';
+        document.getElementById('loading').textContent = 'Error al sincronizar con Google Drive.';
       }
     }
 
@@ -295,7 +290,7 @@
         current.folders.forEach(subfolder => {
           const folderCard = document.createElement('div');
           folderCard.className = 'folder-card';
-          folderCard.innerHTML = `<span class="folder-icon">📁</span> <span>${subfolder.name}</span>`;
+          folderCard.innerHTML = `<span>📁</span> <span>${subfolder.name}</span>`;
           folderCard.onclick = () => {
             currentPath.push(subfolder.name);
             render();
@@ -317,9 +312,7 @@
             </div>
             <div class="card-info">
               <div class="card-title">${file.name}</div>
-              <a href="${file.downloadUrl}" target="_blank" class="download-btn">
-                Descargar
-              </a>
+              <a href="${file.downloadUrl}" target="_blank" class="download-btn">Descargar</a>
             </div>
           `;
           filesContainer.appendChild(card);
