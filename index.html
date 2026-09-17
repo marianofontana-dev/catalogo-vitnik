@@ -11,16 +11,46 @@
       background-color: #f7f7f7;
       padding: 20px;
     }
-    header { text-align: center; margin-bottom: 25px; }
-    header h1 { font-size: 24px; color: #222; letter-spacing: 1px; text-transform: uppercase; }
-    header p { font-size: 14px; color: #666; margin-top: 5px; }
-    
+    header { text-align: center; margin-bottom: 20px; }
+    header h1 { font-size: 24px; color: #222; text-transform: uppercase; }
+
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      color: #555;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .breadcrumb span { cursor: pointer; color: #0066cc; font-weight: 600; }
+    .breadcrumb span:hover { text-decoration: underline; }
+
+    .folders-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 12px;
+      margin-bottom: 25px;
+    }
+    .folder-card {
+      background: #ffffff;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      color: #333;
+      transition: background 0.2s, box-shadow 0.2s;
+    }
+    .folder-card:hover { background: #eef4fc; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+
     .masonry-grid {
       column-count: 4;
       column-gap: 15px;
-      width: 100%;
-      max-width: 1400px;
-      margin: 0 auto;
     }
     @media (max-width: 1100px) { .masonry-grid { column-count: 3; } }
     @media (max-width: 768px)  { .masonry-grid { column-count: 2; } }
@@ -33,78 +63,109 @@
       border-radius: 12px;
       overflow: hidden;
       box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-      display: flex;
-      flex-direction: column;
     }
-    .card img { width: 100%; height: auto; display: block; object-fit: contain; }
+    .card img { width: 100%; height: auto; display: block; }
     .card-info { padding: 12px; display: flex; flex-direction: column; gap: 8px; }
     .card-title { font-size: 14px; font-weight: 600; color: #333; }
     .download-btn {
-      display: inline-block;
       text-align: center;
-      background-color: #111111;
-      color: #ffffff;
+      background: #111;
+      color: #fff;
       text-decoration: none;
-      padding: 8px 12px;
+      padding: 8px;
       border-radius: 6px;
       font-size: 13px;
-      font-weight: 500;
     }
-    #loading { text-align: center; font-size: 16px; color: #666; margin-top: 40px; }
+    #loading { text-align: center; color: #666; margin-top: 40px; font-weight: 500; }
   </style>
 </head>
 <body>
 
   <header>
     <h1>Catálogo Vitnik</h1>
-    <p>Catálogo visual oficial</p>
   </header>
 
-  <div id="loading">Cargando productos...</div>
-  <div class="masonry-grid" id="catalog"></div>
+  <div class="breadcrumb" id="breadcrumb"></div>
+  <div class="folders-grid" id="folders-container"></div>
+  <div class="masonry-grid" id="files-container"></div>
+  <div id="loading">Sincronizando carpetas de Google Drive...</div>
 
   <script>
-    // PEGA AQUÍ TU ENLACE CSV DE GOOGLE SHEETS
-    const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRqmYTtlvjIFZdjeerW7O7lvkU31JMMEaL5hmBLjPCpf6HPXXrl1oeg5qV3gXtVJiUIv1Dep5sbuc4S/pub?output=csv';
+    // PEGA AQUÍ LA URL DE TU APLICACIÓN WEB DE GOOGLE APPS SCRIPT
+    const APPS_SCRIPT_URL = 'PEGA_AQUI_TU_URL_DE_APPS_SCRIPT';
 
-    async function loadCatalog() {
-      const loadingText = document.getElementById('loading');
-      const catalogContainer = document.getElementById('catalog');
+    let driveData = null;
+    let currentPath = [];
 
+    async function init() {
       try {
-        const response = await fetch(SHEET_CSV_URL);
-        const data = await response.text();
-        const rows = data.split('\n').slice(1); // Omitir encabezado
-
-        loadingText.style.display = 'none';
-
-        rows.forEach(row => {
-          const columns = row.split(',');
-          if (columns.length >= 2) {
-            const nombre = columns[0] ? columns[0].replace(/"/g, '').trim() : 'Producto';
-            const previewUrl = columns[1] ? columns[1].replace(/"/g, '').trim() : '';
-            const downloadUrl = columns[2] ? columns[2].replace(/"/g, '').trim() : previewUrl;
-
-            if (previewUrl && previewUrl.startsWith('http')) {
-              const card = document.createElement('div');
-              card.className = 'card';
-              card.innerHTML = `
-                <img src="${previewUrl}" alt="${nombre}" loading="lazy">
-                <div class="card-info">
-                  <div class="card-title">${nombre}</div>
-                  <a href="${downloadUrl}" target="_blank" class="download-btn">Descargar</a>
-                </div>
-              `;
-              catalogContainer.appendChild(card);
-            }
-          }
-        });
-      } catch (error) {
-        loadingText.textContent = 'Error al cargar la planilla. Verifica que el CSV esté publicado.';
+        const response = await fetch(APPS_SCRIPT_URL);
+        driveData = await response.json();
+        document.getElementById('loading').style.display = 'none';
+        render();
+      } catch (err) {
+        document.getElementById('loading').textContent = 'Error al sincronizar con Google Drive.';
       }
     }
 
-    loadCatalog();
+    function getCurrentFolder() {
+      let current = driveData;
+      for (const folderName of currentPath) {
+        current = current.folders.find(f => f.name === folderName);
+      }
+      return current;
+    }
+
+    function render() {
+      const current = getCurrentFolder();
+      const foldersContainer = document.getElementById('folders-container');
+      const filesContainer = document.getElementById('files-container');
+      const breadcrumb = document.getElementById('breadcrumb');
+
+      foldersContainer.innerHTML = '';
+      filesContainer.innerHTML = '';
+
+      let breadcrumbHTML = `<span onclick="navigateTo(-1)">Inicio</span>`;
+      currentPath.forEach((name, index) => {
+        breadcrumbHTML += ` > <span onclick="navigateTo(${index})">${name}</span>`;
+      });
+      breadcrumb.innerHTML = breadcrumbHTML;
+
+      current.folders.forEach(subfolder => {
+        const folderCard = document.createElement('div');
+        folderCard.className = 'folder-card';
+        folderCard.innerHTML = `📁 <span>${subfolder.name}</span>`;
+        folderCard.onclick = () => {
+          currentPath.push(subfolder.name);
+          render();
+        };
+        foldersContainer.appendChild(folderCard);
+      });
+
+      current.files.forEach(file => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+          <img src="${file.previewUrl}" alt="${file.name}" loading="lazy" onerror="this.src='https://via.placeholder.com/400x600?text=Vista+Previa'">
+          <div class="card-info">
+            <div class="card-title">${file.name}</div>
+            <a href="${file.downloadUrl}" target="_blank" class="download-btn">Descargar</a>
+          </div>
+        `;
+        filesContainer.appendChild(card);
+      });
+    }
+
+    function navigateTo(index) {
+      if (index === -1) {
+        currentPath = [];
+      } else {
+        currentPath = currentPath.slice(0, index + 1);
+      }
+      render();
+    }
+
+    init();
   </script>
 </body>
 </html>
