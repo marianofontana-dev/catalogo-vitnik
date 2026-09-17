@@ -98,7 +98,8 @@
 
     async function init() {
       try {
-        const response = await fetch(APPS_SCRIPT_URL);
+        // Redirección explícita para evitar bloqueo CORS
+        const response = await fetch(APPS_SCRIPT_URL, { redirect: 'follow' });
         driveData = await response.json();
         document.getElementById('loading').style.display = 'none';
         render();
@@ -110,7 +111,9 @@
     function getCurrentFolder() {
       let current = driveData;
       for (const folderName of currentPath) {
-        current = current.folders.find(f => f.name === folderName);
+        if (current && current.folders) {
+          current = current.folders.find(f => f.name === folderName);
+        }
       }
       return current;
     }
@@ -120,6 +123,8 @@
       const foldersContainer = document.getElementById('folders-container');
       const filesContainer = document.getElementById('files-container');
       const breadcrumb = document.getElementById('breadcrumb');
+
+      if (!current) return;
 
       foldersContainer.innerHTML = '';
       filesContainer.innerHTML = '';
