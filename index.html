@@ -91,7 +91,7 @@
   <div id="loading">Sincronizando carpetas de Google Drive...</div>
 
   <script>
-    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfyc bzwKpvlcEsnysyRZYN2gBY4UTbSza4v_pCJhXQX1rE1NXtABRQ2tGkxYJQQPqK/exec'.replace(/\s+/g, '');
+    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzwKpvIcEsnysyRZYN2gBY4UTbSza4v_pCJhXQX1rE1NXtABRQ2tGkxYJQQpqKs655S/exec';
 
     let driveData = null;
     let currentPath = [];
@@ -130,29 +130,33 @@
       });
       breadcrumb.innerHTML = breadcrumbHTML;
 
-      current.folders.forEach(subfolder => {
-        const folderCard = document.createElement('div');
-        folderCard.className = 'folder-card';
-        folderCard.innerHTML = `📁 <span>${subfolder.name}</span>`;
-        folderCard.onclick = () => {
-          currentPath.push(subfolder.name);
-          render();
-        };
-        foldersContainer.appendChild(folderCard);
-      });
+      if (current.folders) {
+        current.folders.forEach(subfolder => {
+          const folderCard = document.createElement('div');
+          folderCard.className = 'folder-card';
+          folderCard.innerHTML = `📁 <span>${subfolder.name}</span>`;
+          folderCard.onclick = () => {
+            currentPath.push(subfolder.name);
+            render();
+          };
+          foldersContainer.appendChild(folderCard);
+        });
+      }
 
-      current.files.forEach(file => {
-        const card = document.createElement('div');
-        card.className = 'card';
-        card.innerHTML = `
-          <img src="${file.previewUrl}" alt="${file.name}" loading="lazy" onerror="this.src='https://via.placeholder.com/400x600?text=Vista+Previa'">
-          <div class="card-info">
-            <div class="card-title">${file.name}</div>
-            <a href="${file.downloadUrl}" target="_blank" class="download-btn">Descargar</a>
-          </div>
-        `;
-        filesContainer.appendChild(card);
-      });
+      if (current.files) {
+        current.files.forEach(file => {
+          const card = document.createElement('div');
+          card.className = 'card';
+          card.innerHTML = `
+            <img src="${file.previewUrl}" alt="${file.name}" loading="lazy" onerror="this.src='https://via.placeholder.com/400x600?text=Vista+Previa'">
+            <div class="card-info">
+              <div class="card-title">${file.name}</div>
+              <a href="${file.downloadUrl}" target="_blank" class="download-btn">Descargar</a>
+            </div>
+          `;
+          filesContainer.appendChild(card);
+        });
+      }
     }
 
     function navigateTo(index) {
