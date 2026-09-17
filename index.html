@@ -33,7 +33,7 @@
     .brand-logo-img { height: 26px; width: auto; display: block; }
     .brand-subtitle { font-size: 10px; font-weight: 700; letter-spacing: 2px; color: #777; text-transform: uppercase; }
 
-    /* Breadcrumbs / Menú de navegación pequeño */
+    /* Breadcrumbs */
     .breadcrumb-container { display: flex; justify-content: center; margin-bottom: 25px; }
     .breadcrumb {
       display: inline-flex;
@@ -52,7 +52,7 @@
     .breadcrumb span:hover { color: #e60000; }
     .breadcrumb-separator { color: #ccc; font-size: 10px; }
 
-    /* Carpetas en Píldora */
+    /* Carpetas Píldoras */
     .folders-grid {
       display: flex;
       flex-wrap: wrap;
@@ -88,7 +88,7 @@
     }
     .folder-card:hover svg { stroke: #fff; }
 
-    /* Grilla estilo Pinterest */
+    /* Grilla Pinterest */
     .masonry-grid { column-count: 4; column-gap: 18px; max-width: 1400px; margin: 0 auto; }
     @media (max-width: 1200px) { .masonry-grid { column-count: 3; } }
     @media (max-width: 850px)  { .masonry-grid { column-count: 2; column-gap: 12px; } }
@@ -130,61 +130,57 @@
 
     .card-title { font-size: 12px; font-weight: 600; color: #333; margin-top: 8px; padding-left: 2px; }
 
-    /* Modal Adaptativo Fluido */
+    /* Modal Dinámico para Videos Verticales */
     .modal-backdrop {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(8px);
+      background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px);
       display: flex; align-items: center; justify-content: center;
       z-index: 9999; opacity: 0; pointer-events: none;
-      transition: opacity 0.25s ease; padding: 20px;
+      transition: opacity 0.25s ease; padding: 15px;
     }
     .modal-backdrop.active { opacity: 1; pointer-events: auto; }
 
     .modal-card {
       background: #ffffff; border-radius: 24px;
-      max-width: 900px; width: 100%; max-height: 90vh;
+      max-width: 900px; width: 100%; height: 85vh;
       display: flex; overflow: hidden;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.5); position: relative;
-      transition: max-width 0.3s ease;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.6); position: relative;
     }
-    
-    /* Adaptación si es video vertical */
+
     .modal-card.is-vertical {
-      max-width: 700px;
+      max-width: 800px;
     }
 
     @media (max-width: 750px) {
-      .modal-card { flex-direction: column; max-height: 92vh; overflow-y: auto; }
-      .modal-card.is-vertical { max-width: 100%; }
+      .modal-card { flex-direction: column; height: 92vh; overflow-y: auto; }
     }
 
     .modal-media-container {
-      flex: 1.2; background: #000;
+      flex: 1.5; background: #000;
       display: flex; align-items: center; justify-content: center;
-      position: relative; overflow: hidden; min-height: 380px;
+      position: relative; overflow: hidden; height: 100%;
     }
     
-    .modal-media-container img { width: 100%; height: 100%; object-fit: contain; max-height: 80vh; }
+    .modal-media-container img { width: 100%; height: 100%; object-fit: contain; }
     
-    /* El iframe ahora se escala perfecto sin recortes */
+    /* El iframe toma la altura completa del modal sin cortes */
     .modal-media-container iframe {
       width: 100%; height: 100%; border: none; display: block;
-      min-height: 520px;
     }
 
     .modal-content {
       flex: 1; padding: 30px 25px;
       display: flex; flex-direction: column; justify-content: space-between;
-      min-width: 280px;
+      min-width: 280px; background: #fff;
     }
     
     .modal-close {
       position: absolute; top: 12px; right: 12px;
       background: #ffffff; border: none;
-      width: 30px; height: 30px; border-radius: 50%;
+      width: 32px; height: 32px; border-radius: 50%;
       cursor: pointer; font-weight: bold;
       display: flex; align-items: center; justify-content: center;
-      z-index: 10; box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      z-index: 10; box-shadow: 0 2px 10px rgba(0,0,0,0.3);
     }
     .modal-close:hover { background: #f0f0f0; }
 
@@ -318,13 +314,10 @@
           });
         }
 
-        // Historial del navegador (Atrás / Adelante)
+        // Abrir modal solo si la URL explícitamente tiene ?id=... enviado desde un link externo
         if (!isNavigatingHistory) {
-          const stateUrl = folderId ? `?folderId=${folderId}` : location.pathname;
-          history.pushState({ folderId: folderId, modalId: null, stack: [...historyStack] }, '', stateUrl);
+          checkUrlParamAndOpenModal();
         }
-
-        checkUrlParamAndOpenModal();
 
       } catch (err) {
         loading.innerHTML = 'Error al cargar los materiales gráficos.';
@@ -407,9 +400,8 @@
       document.getElementById('modal-backdrop').classList.add('active');
 
       if (!isNavigatingHistory) {
-        const currentFolderId = historyStack[historyStack.length - 1]?.id;
         const newUrl = `?id=${file.id}`;
-        history.pushState({ folderId: currentFolderId, modalId: file.id, stack: [...historyStack] }, '', newUrl);
+        history.pushState({ modalId: file.id, stack: [...historyStack] }, '', newUrl);
       }
     }
 
@@ -420,14 +412,12 @@
         currentOpenedFile = null;
 
         if (!isNavigatingHistory) {
-          const currentFolderId = historyStack[historyStack.length - 1]?.id;
-          const cleanUrl = currentFolderId ? `?folderId=${currentFolderId}` : location.pathname;
-          history.pushState({ folderId: currentFolderId, modalId: null, stack: [...historyStack] }, '', cleanUrl);
+          const cleanUrl = window.location.pathname;
+          history.pushState({ modalId: null, stack: [...historyStack] }, '', cleanUrl);
         }
       }
     }
 
-    /* Manejador inteligente de la flecha "Atrás / Adelante" */
     window.onpopstate = function(event) {
       if (document.getElementById('modal-backdrop').classList.contains('active')) {
         closeModal(null, true);
