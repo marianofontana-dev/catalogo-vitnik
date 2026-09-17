@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Catálogo Oficial | Vitnik</title>
+  <title>Banco de Imágenes | Red Comercial Vitnik</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -19,28 +19,34 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* Header */
+    /* Header con Logo SVG Oficial */
     header { text-align: center; margin-bottom: 30px; }
-    .brand-logo {
+    
+    .brand-logo-container {
       cursor: pointer;
-      display: inline-block;
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
       transition: transform 0.2s ease, opacity 0.2s ease;
     }
-    .brand-logo:hover { transform: scale(1.03); opacity: 0.9; }
-    .brand-title {
-      font-size: 28px;
-      font-weight: 800;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: #000;
+    .brand-logo-container:hover {
+      transform: scale(1.02);
+      opacity: 0.9;
     }
+    
+    .brand-logo-img {
+      height: 28px;
+      width: auto;
+      display: block;
+    }
+    
     .brand-subtitle {
-      font-size: 12px;
-      font-weight: 500;
+      font-size: 11px;
+      font-weight: 700;
       letter-spacing: 2px;
-      color: #888;
+      color: #777777;
       text-transform: uppercase;
-      margin-top: 4px;
     }
 
     /* Breadcrumbs */
@@ -145,7 +151,6 @@
     }
     .card:hover img { transform: scale(1.03); }
 
-    /* Overlay al pasar el cursor */
     .card-overlay {
       position: absolute;
       top: 0; left: 0; right: 0; bottom: 0;
@@ -283,9 +288,9 @@
 <body>
 
   <header>
-    <div class="brand-logo" onclick="navigateToHome()">
-      <div class="brand-title">VITNIK</div>
-      <div class="brand-subtitle">Catálogo Oficial</div>
+    <div class="brand-logo-container" onclick="navigateToHome()">
+      <img src="https://d1be5bwc8qcj63.cloudfront.net/img/logos/logo-vitnik-black.svg" alt="Vitnik" class="brand-logo-img">
+      <div class="brand-subtitle">Banco de Imágenes & Material Gráfico</div>
     </div>
   </header>
 
@@ -298,7 +303,7 @@
   
   <div id="loading">
     <div class="spinner"></div>
-    Cargando catálogo...
+    Cargando recursos gráficos...
   </div>
 
   <!-- Modal -->
@@ -311,7 +316,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h3 id="modal-title">Nombre del recurso</h3>
-          <p>Material gráfico en alta resolución para uso en redes sociales y catálogo comercial Vitnik.</p>
+          <p>Material gráfico en alta resolución para uso en redes sociales y difusión comercial Vitnik.</p>
         </div>
         <a id="modal-download" href="#" target="_blank" class="modal-download-btn">Descargar recurso original</a>
       </div>
@@ -323,7 +328,6 @@
 
     let historyStack = [];
 
-    // Ícono SVG vectorial de carpeta minimalista
     const folderSvgIcon = `
       <svg viewBox="0 0 24 24">
         <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
@@ -355,7 +359,7 @@
         renderFiles(data.files || []);
 
       } catch (err) {
-        loading.innerHTML = 'Error al cargar el catálogo de Google Drive.';
+        loading.innerHTML = 'Error al cargar los materiales gráficos.';
       }
     }
 
