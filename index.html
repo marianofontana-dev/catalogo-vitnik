@@ -3,92 +3,246 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Catálogo Vitnik</title>
+  <title>Catálogo Oficial | Vitnik</title>
+  <!-- Fuente tipográfica moderna -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
+    
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background-color: #f7f7f7;
-      padding: 20px;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: #f8f9fa;
+      color: #1a1a1a;
+      padding: 30px 20px;
+      -webkit-font-smoothing: antialiased;
     }
-    header { text-align: center; margin-bottom: 20px; }
-    header h1 { font-size: 24px; color: #222; text-transform: uppercase; }
 
-    .breadcrumb {
+    /* Encabezado con Logo clicable a Home */
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    
+    .brand-logo {
+      cursor: pointer;
+      display: inline-block;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+    .brand-logo:hover {
+      transform: scale(1.03);
+      opacity: 0.9;
+    }
+    
+    .brand-title {
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #000;
+    }
+    .brand-subtitle {
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 2px;
+      color: #888;
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+
+    /* Breadcrumbs estilo Píldoras */
+    .breadcrumb-container {
       display: flex;
+      justify-content: center;
+      margin-bottom: 25px;
+    }
+    .breadcrumb {
+      display: inline-flex;
       align-items: center;
-      gap: 8px;
-      font-size: 14px;
-      color: #555;
-      margin-bottom: 20px;
+      gap: 6px;
+      background: #ffffff;
+      padding: 8px 16px;
+      border-radius: 30px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+      border: 1px solid #eaeaea;
+      font-size: 13px;
+      color: #666;
       flex-wrap: wrap;
     }
-    .breadcrumb span { cursor: pointer; color: #0066cc; font-weight: 600; }
-    .breadcrumb span:hover { text-decoration: underline; }
+    .breadcrumb span {
+      cursor: pointer;
+      color: #111;
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+    .breadcrumb span:hover {
+      color: #e60000; /* Color distintivo al hover */
+    }
+    .breadcrumb-separator {
+      color: #ccc;
+      font-size: 11px;
+    }
 
+    /* Grilla de carpetas estilo Píldora / Chips */
     .folders-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
       gap: 12px;
-      margin-bottom: 25px;
+      margin-bottom: 35px;
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
     }
     .folder-card {
       background: #ffffff;
-      border: 1px solid #e0e0e0;
-      border-radius: 8px;
-      padding: 14px 18px;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 12px 20px;
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
       cursor: pointer;
       font-size: 14px;
       font-weight: 600;
-      color: #333;
-      transition: background 0.2s, box-shadow 0.2s;
+      color: #2d3748;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     }
-    .folder-card:hover { background: #eef4fc; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .folder-card:hover {
+      background: #111111;
+      color: #ffffff;
+      border-color: #111111;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+    }
+    .folder-icon {
+      font-size: 16px;
+    }
 
+    /* Grilla estilo Pinterest pura (Masonry) */
     .masonry-grid {
       column-count: 4;
-      column-gap: 15px;
+      column-gap: 20px;
+      max-width: 1400px;
+      margin: 0 auto;
     }
-    @media (max-width: 1100px) { .masonry-grid { column-count: 3; } }
-    @media (max-width: 768px)  { .masonry-grid { column-count: 2; } }
-    @media (max-width: 480px)  { .masonry-grid { column-count: 1; } }
+    @media (max-width: 1200px) { .masonry-grid { column-count: 3; } }
+    @media (max-width: 850px)  { .masonry-grid { column-count: 2; column-gap: 15px; } }
+    @media (max-width: 500px)  { .masonry-grid { column-count: 1; } }
 
+    /* Tarjetas de producto */
     .card {
       break-inside: avoid;
-      margin-bottom: 15px;
+      margin-bottom: 20px;
       background: #ffffff;
-      border-radius: 12px;
+      border-radius: 20px;
       overflow: hidden;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+      border: 1px solid rgba(0,0,0,0.03);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      flex-direction: column;
     }
-    .card img { width: 100%; height: auto; display: block; }
-    .card-info { padding: 12px; display: flex; flex-direction: column; gap: 8px; }
-    .card-title { font-size: 14px; font-weight: 600; color: #333; }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+    }
+    
+    .card-img-wrapper {
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+      background-color: #f1f1f1;
+    }
+    .card img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+    .card:hover img {
+      transform: scale(1.04);
+    }
+
+    .card-info {
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      background: #ffffff;
+    }
+    .card-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: #333333;
+      line-height: 1.4;
+      word-break: break-word;
+    }
+    
     .download-btn {
       text-align: center;
-      background: #111;
-      color: #fff;
+      background: #111111;
+      color: #ffffff;
       text-decoration: none;
-      padding: 8px;
-      border-radius: 6px;
-      font-size: 13px;
+      padding: 10px 16px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
     }
-    #loading { text-align: center; color: #666; margin-top: 40px; font-weight: 500; }
+    .download-btn:hover {
+      background: #333333;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    /* Estado de carga */
+    #loading {
+      text-align: center;
+      color: #888;
+      margin-top: 60px;
+      font-weight: 500;
+      font-size: 15px;
+    }
+    .spinner {
+      width: 32px;
+      height: 32px;
+      border: 3px solid #eee;
+      border-top: 3px solid #111;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 15px auto;
+    }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
   </style>
 </head>
 <body>
 
   <header>
-    <h1>Catálogo Vitnik</h1>
+    <div class="brand-logo" onclick="navigateTo(-1)">
+      <div class="brand-title">VITNIK</div>
+      <div class="brand-subtitle">Catálogo Oficial</div>
+    </div>
   </header>
 
-  <div class="breadcrumb" id="breadcrumb"></div>
+  <div class="breadcrumb-container">
+    <div class="breadcrumb" id="breadcrumb"></div>
+  </div>
+
   <div class="folders-grid" id="folders-container"></div>
   <div class="masonry-grid" id="files-container"></div>
-  <div id="loading">Sincronizando carpetas de Google Drive...</div>
+  
+  <div id="loading">
+    <div class="spinner"></div>
+    Cargando catálogo...
+  </div>
 
   <script>
     const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzwKpvIcEsnysyRZYN2gBY4UTbSza4v_pCJhXQX1rE1NXtABRQ2tGkxYJQQpqKs655S/exec';
@@ -98,13 +252,12 @@
 
     async function init() {
       try {
-        // Redirección explícita para evitar bloqueo CORS
         const response = await fetch(APPS_SCRIPT_URL, { redirect: 'follow' });
         driveData = await response.json();
         document.getElementById('loading').style.display = 'none';
         render();
       } catch (err) {
-        document.getElementById('loading').textContent = 'Error al sincronizar con Google Drive.';
+        document.getElementById('loading').innerHTML = 'Error al sincronizar con Google Drive.';
       }
     }
 
@@ -129,34 +282,44 @@
       foldersContainer.innerHTML = '';
       filesContainer.innerHTML = '';
 
+      // Breadcrumb render
       let breadcrumbHTML = `<span onclick="navigateTo(-1)">Inicio</span>`;
       currentPath.forEach((name, index) => {
-        breadcrumbHTML += ` > <span onclick="navigateTo(${index})">${name}</span>`;
+        breadcrumbHTML += `<span class="breadcrumb-separator">/</span><span onclick="navigateTo(${index})">${name}</span>`;
       });
       breadcrumb.innerHTML = breadcrumbHTML;
 
-      if (current.folders) {
+      // Render carpetas
+      if (current.folders && current.folders.length > 0) {
+        foldersContainer.style.display = 'flex';
         current.folders.forEach(subfolder => {
           const folderCard = document.createElement('div');
           folderCard.className = 'folder-card';
-          folderCard.innerHTML = `📁 <span>${subfolder.name}</span>`;
+          folderCard.innerHTML = `<span class="folder-icon">📁</span> <span>${subfolder.name}</span>`;
           folderCard.onclick = () => {
             currentPath.push(subfolder.name);
             render();
           };
           foldersContainer.appendChild(folderCard);
         });
+      } else {
+        foldersContainer.style.display = 'none';
       }
 
+      // Render archivos / productos
       if (current.files) {
         current.files.forEach(file => {
           const card = document.createElement('div');
           card.className = 'card';
           card.innerHTML = `
-            <img src="${file.previewUrl}" alt="${file.name}" loading="lazy" onerror="this.src='https://via.placeholder.com/400x600?text=Vista+Previa'">
+            <div class="card-img-wrapper">
+              <img src="${file.previewUrl}" alt="${file.name}" loading="lazy" onerror="this.src='https://via.placeholder.com/400x600?text=Vista+Previa'">
+            </div>
             <div class="card-info">
               <div class="card-title">${file.name}</div>
-              <a href="${file.downloadUrl}" target="_blank" class="download-btn">Descargar</a>
+              <a href="${file.downloadUrl}" target="_blank" class="download-btn">
+                Descargar
+              </a>
             </div>
           `;
           filesContainer.appendChild(card);
