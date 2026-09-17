@@ -87,7 +87,6 @@
     }
     .folder-card:hover svg { stroke: #fff; }
 
-    /* Grilla estilo Pinterest adaptativa */
     .masonry-grid { column-count: 4; column-gap: 20px; max-width: 1400px; margin: 0 auto; }
     @media (max-width: 1200px) { .masonry-grid { column-count: 3; } }
     @media (max-width: 850px)  { .masonry-grid { column-count: 2; column-gap: 15px; } }
@@ -111,7 +110,6 @@
       box-shadow: 0 4px 15px rgba(0,0,0,0.04);
     }
 
-    /* Formato natural de video/imagen */
     .card img {
       width: 100%;
       height: auto;
@@ -121,7 +119,7 @@
     
     .card-video-iframe {
       width: 100%;
-      aspect-ratio: 9 / 16; /* Formato vertical estándar estilo Reels/TikTok */
+      aspect-ratio: 9 / 16;
       border: none;
       display: block;
       pointer-events: none;
@@ -150,10 +148,10 @@
 
     .card-title { font-size: 13px; font-weight: 600; color: #333; margin-top: 10px; padding-left: 2px; }
 
-    /* Modal */
+    /* Modal Adaptativo */
     .modal-backdrop {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(8px);
+      background: rgba(0, 0, 0, 0.75); backdrop-filter: blur(8px);
       display: flex; align-items: center; justify-content: center;
       z-index: 9999; opacity: 0; pointer-events: none;
       transition: opacity 0.3s ease; padding: 20px;
@@ -162,28 +160,34 @@
 
     .modal-card {
       background: #ffffff; border-radius: 24px;
-      max-width: 900px; width: 100%; max-height: 85vh;
+      max-width: 900px; width: 100%; max-height: 90vh;
       display: flex; overflow: hidden;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.3); position: relative;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.4); position: relative;
+      transition: all 0.3s ease;
     }
-    @media (max-width: 700px) { .modal-card { flex-direction: column; max-height: 90vh; overflow-y: auto; } }
+    @media (max-width: 750px) { .modal-card { flex-direction: column; max-height: 90vh; overflow-y: auto; } }
 
     .modal-media-container {
       flex: 1.2; background: #000;
-      display: flex; align-items: center; justify-content: center; overflow: hidden;
-      min-height: 400px;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden; position: relative;
+      min-height: 350px;
     }
+    
     .modal-media-container img {
-      width: 100%; height: 100%; object-fit: contain;
+      width: 100%; height: 100%; object-fit: contain; max-height: 80vh;
     }
+    
     .modal-media-container iframe {
-      width: 100%; height: 100%; min-height: 450px; border: none;
+      width: 100%; height: 100%; min-height: 500px; border: none; display: block;
     }
 
     .modal-content {
       flex: 1; padding: 35px 30px;
       display: flex; flex-direction: column; justify-content: space-between;
+      min-width: 300px;
     }
+    
     .modal-close {
       position: absolute; top: 15px; right: 15px;
       background: #f0f0f0; border: none;
@@ -194,13 +198,13 @@
     }
     .modal-close:hover { background: #e0e0e0; }
 
-    .modal-header h3 { font-size: 18px; font-weight: 700; color: #111; margin-bottom: 10px; }
+    .modal-header h3 { font-size: 18px; font-weight: 700; color: #111; margin-bottom: 10px; word-break: break-word; }
     .modal-header p { font-size: 13px; color: #666; line-height: 1.5; }
 
     .modal-download-btn {
       background: #e60000; color: #ffffff; text-decoration: none;
       text-align: center; padding: 14px; border-radius: 30px;
-      font-size: 13px; font-weight: 700;
+      font-size: 13px; font-weight: 700; margin-top: 20px;
       box-shadow: 0 6px 18px rgba(230,0,0,0.3); transition: background 0.2s;
     }
     .modal-download-btn:hover { background: #cc0000; }
@@ -353,7 +357,7 @@
       const box = document.getElementById('modal-media-box');
       if (file.isVideo) {
         const embedUrl = `https://drive.google.com/file/d/${file.id}/preview`;
-        box.innerHTML = `<iframe src="${embedUrl}"></iframe>`;
+        box.innerHTML = `<iframe src="${embedUrl}" allow="autoplay"></iframe>`;
       } else {
         box.innerHTML = `<img src="${file.previewUrl}" alt="${file.name}">`;
       }
