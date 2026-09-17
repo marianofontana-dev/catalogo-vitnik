@@ -52,7 +52,7 @@
     .breadcrumb span:hover { color: #e60000; }
     .breadcrumb-separator { color: #ccc; font-size: 10px; }
 
-    /* Carpetas Píldoras */
+    /* Carpetas */
     .folders-grid {
       display: flex;
       flex-wrap: wrap;
@@ -130,7 +130,7 @@
 
     .card-title { font-size: 12px; font-weight: 600; color: #333; margin-top: 8px; padding-left: 2px; }
 
-    /* Modal Dinámico para Videos Verticales */
+    /* Modal Principal */
     .modal-backdrop {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px);
@@ -147,9 +147,7 @@
       box-shadow: 0 20px 50px rgba(0,0,0,0.6); position: relative;
     }
 
-    .modal-card.is-vertical {
-      max-width: 800px;
-    }
+    .modal-card.is-vertical { max-width: 800px; }
 
     @media (max-width: 750px) {
       .modal-card { flex-direction: column; height: 92vh; overflow-y: auto; }
@@ -162,11 +160,7 @@
     }
     
     .modal-media-container img { width: 100%; height: 100%; object-fit: contain; }
-    
-    /* El iframe toma la altura completa del modal sin cortes */
-    .modal-media-container iframe {
-      width: 100%; height: 100%; border: none; display: block;
-    }
+    .modal-media-container iframe { width: 100%; height: 100%; border: none; display: block; }
 
     .modal-content {
       flex: 1; padding: 30px 25px;
@@ -207,11 +201,65 @@
     .modal-share-btn:hover { background: #333333; }
     .modal-share-btn svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2; }
 
+    /* Modal Custom de Compartir Estilo Pinterest */
+    .share-modal-backdrop {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.4);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 10000; opacity: 0; pointer-events: none;
+      transition: opacity 0.2s ease;
+    }
+    .share-modal-backdrop.active { opacity: 1; pointer-events: auto; }
+
+    .share-card {
+      background: #ffffff; border-radius: 20px;
+      padding: 24px; width: 340px; text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+      transform: scale(0.95); transition: transform 0.2s ease;
+    }
+    .share-modal-backdrop.active .share-card { transform: scale(1); }
+
+    .share-card h4 { font-size: 15px; font-weight: 700; margin-bottom: 18px; color: #111; }
+
+    .share-options {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 20px;
+    }
+
+    .share-opt-btn {
+      display: flex; flex-direction: column; align-items: center; gap: 6px;
+      background: none; border: none; cursor: pointer; font-size: 11px; font-weight: 600; color: #444;
+    }
+
+    .share-icon-circle {
+      width: 48px; height: 48px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; transition: transform 0.2s ease;
+    }
+    .share-opt-btn:hover .share-icon-circle { transform: scale(1.08); }
+
+    .bg-whatsapp { background: #25D366; }
+    .bg-copy { background: #111111; }
+    .bg-email { background: #ea4335; }
+
+    .share-link-input-group {
+      display: flex; background: #f1f1f1; border-radius: 12px; padding: 4px; overflow: hidden;
+    }
+    .share-link-input-group input {
+      flex: 1; border: none; background: transparent; padding: 8px 10px; font-size: 11px; color: #555; outline: none;
+    }
+    .share-link-input-group button {
+      background: #111; color: #fff; border: none; padding: 6px 14px; border-radius: 8px; font-size: 11px; font-weight: 700; cursor: pointer;
+    }
+
+    .share-close-btn {
+      margin-top: 15px; background: transparent; border: none; font-size: 12px; font-weight: 600; color: #888; cursor: pointer;
+    }
+
     .toast-notification {
       position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px);
       background: #111; color: #fff; padding: 10px 22px; border-radius: 30px;
       font-size: 12px; font-weight: 600; box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-      opacity: 0; transition: all 0.3s ease; z-index: 10000; pointer-events: none;
+      opacity: 0; transition: all 0.3s ease; z-index: 10001; pointer-events: none;
     }
     .toast-notification.active { transform: translateX(-50%) translateY(0); opacity: 1; }
 
@@ -245,7 +293,7 @@
     Cargando recursos gráficos...
   </div>
 
-  <!-- Modal -->
+  <!-- Modal Principal -->
   <div class="modal-backdrop" id="modal-backdrop" onclick="closeModal(event)">
     <div class="modal-card" id="modal-card" onclick="event.stopPropagation()">
       <button class="modal-close" onclick="closeModal()">✕</button>
@@ -258,12 +306,48 @@
         
         <div class="modal-actions">
           <a id="modal-download" href="#" target="_blank" class="modal-download-btn">Descargar recurso original</a>
-          <button class="modal-share-btn" onclick="shareCurrentResource()">
+          <button class="modal-share-btn" onclick="openShareModal()">
             <svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
             Compartir
           </button>
         </div>
       </div>
+    </div>
+  </div>
+
+  <!-- Sub-Modal Custom de Compartir -->
+  <div class="share-modal-backdrop" id="share-modal-backdrop" onclick="closeShareModal()">
+    <div class="share-card" onclick="event.stopPropagation()">
+      <h4>Compartir recurso</h4>
+      <div class="share-options">
+        <button class="share-opt-btn" onclick="shareToWhatsApp()">
+          <div class="share-icon-circle bg-whatsapp">
+            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/></svg>
+          </div>
+          WhatsApp
+        </button>
+
+        <button class="share-opt-btn" onclick="copyShareUrl()">
+          <div class="share-icon-circle bg-copy">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+          </div>
+          Copiar Link
+        </button>
+
+        <button class="share-opt-btn" onclick="shareToEmail()">
+          <div class="share-icon-circle bg-email">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+          </div>
+          Email
+        </button>
+      </div>
+
+      <div class="share-link-input-group">
+        <input type="text" id="share-link-input" readonly>
+        <button onclick="copyShareUrl()">Copiar</button>
+      </div>
+
+      <button class="share-close-btn" onclick="closeShareModal()">Cancelar</button>
     </div>
   </div>
 
@@ -314,8 +398,8 @@
           });
         }
 
-        // Abrir modal solo si la URL explícitamente tiene ?id=... enviado desde un link externo
-        if (!isNavigatingHistory) {
+        // Solo evalúa abrir modal si el usuario entra directo desde un enlace compartido
+        if (!isNavigatingHistory && historyStack.length === 1) {
           checkUrlParamAndOpenModal();
         }
 
@@ -410,6 +494,7 @@
         document.getElementById('modal-backdrop').classList.remove('active');
         document.getElementById('modal-media-box').innerHTML = '';
         currentOpenedFile = null;
+        closeShareModal();
 
         if (!isNavigatingHistory) {
           const cleanUrl = window.location.pathname;
@@ -418,7 +503,55 @@
       }
     }
 
+    /* Sub-Modal de Compartir */
+    function openShareModal() {
+      if (!currentOpenedFile) return;
+      const shareUrl = `${window.location.origin}${window.location.pathname}?id=${currentOpenedFile.id}`;
+      document.getElementById('share-link-input').value = shareUrl;
+      document.getElementById('share-modal-backdrop').classList.add('active');
+    }
+
+    function closeShareModal() {
+      document.getElementById('share-modal-backdrop').classList.remove('active');
+    }
+
+    function shareToWhatsApp() {
+      if (!currentOpenedFile) return;
+      const shareUrl = `${window.location.origin}${window.location.pathname}?id=${currentOpenedFile.id}`;
+      const text = encodeURIComponent(`Mirá este recurso de Vitnik: ${currentOpenedFile.name}\n${shareUrl}`);
+      window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
+    }
+
+    function shareToEmail() {
+      if (!currentOpenedFile) return;
+      const shareUrl = `${window.location.origin}${window.location.pathname}?id=${currentOpenedFile.id}`;
+      const subject = encodeURIComponent(`Vitnik - ${currentOpenedFile.name}`);
+      const body = encodeURIComponent(`Podés ver y descargar el recurso en el siguiente enlace:\n\n${shareUrl}`);
+      window.location.href = `mailto:?subject=${subject}&body=${body}`;
+    }
+
+    function copyShareUrl() {
+      const input = document.getElementById('share-link-input');
+      input.select();
+      navigator.clipboard.writeText(input.value).then(() => {
+        showToast('¡Enlace copiado!');
+        closeShareModal();
+      });
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.classList.add('active');
+      setTimeout(() => toast.classList.remove('active'), 2500);
+    }
+
     window.onpopstate = function(event) {
+      if (document.getElementById('share-modal-backdrop').classList.contains('active')) {
+        closeShareModal();
+        return;
+      }
+
       if (document.getElementById('modal-backdrop').classList.contains('active')) {
         closeModal(null, true);
         return;
@@ -432,55 +565,6 @@
         navigateToHome(true);
       }
     };
-
-    function shareCurrentResource() {
-      if (!currentOpenedFile) return;
-
-      const shareUrl = `${window.location.origin}${window.location.pathname}?id=${currentOpenedFile.id}`;
-
-      if (navigator.share) {
-        navigator.share({
-          title: `Vitnik - ${currentOpenedFile.name}`,
-          text: `Recurso disponible en Banco de Imágenes Vitnik:`,
-          url: shareUrl
-        }).catch(() => copyToClipboardFallback(shareUrl));
-      } else {
-        copyToClipboardFallback(shareUrl);
-      }
-    }
-
-    function copyToClipboardFallback(text) {
-      if (navigator.clipboard && window.isSecureContext) {
-        navigator.clipboard.writeText(text).then(() => showToast('¡Enlace copiado al portapapeles!'))
-        .catch(() => execCopyFallback(text));
-      } else {
-        execCopyFallback(text);
-      }
-    }
-
-    function execCopyFallback(text) {
-      const textarea = document.createElement('textarea');
-      textarea.value = text;
-      textarea.style.position = 'fixed';
-      textarea.style.opacity = '0';
-      document.body.appendChild(textarea);
-      textarea.focus();
-      textarea.select();
-      try {
-        document.execCommand('copy');
-        showToast('¡Enlace copiado al portapapeles!');
-      } catch (err) {
-        alert('Copiá este enlace: ' + text);
-      }
-      document.body.removeChild(textarea);
-    }
-
-    function showToast(msg) {
-      const toast = document.getElementById('toast');
-      toast.textContent = msg;
-      toast.classList.add('active');
-      setTimeout(() => toast.classList.remove('active'), 2500);
-    }
 
     function checkUrlParamAndOpenModal() {
       const urlParams = new URLSearchParams(window.location.search);
