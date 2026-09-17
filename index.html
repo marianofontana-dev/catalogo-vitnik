@@ -15,48 +15,50 @@
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       background-color: #f8f9fa;
       color: #1a1a1a;
-      padding: 30px 20px;
+      padding: 25px 20px;
       -webkit-font-smoothing: antialiased;
     }
 
-    header { text-align: center; margin-bottom: 30px; }
+    header { text-align: center; margin-bottom: 20px; }
     
     .brand-logo-container {
       cursor: pointer;
       display: inline-flex;
       flex-direction: column;
       align-items: center;
-      gap: 10px;
-      transition: transform 0.2s ease, opacity 0.2s ease;
+      gap: 8px;
+      transition: transform 0.2s ease;
     }
-    .brand-logo-container:hover { transform: scale(1.02); opacity: 0.9; }
-    .brand-logo-img { height: 28px; width: auto; display: block; }
-    .brand-subtitle { font-size: 11px; font-weight: 700; letter-spacing: 2px; color: #777; text-transform: uppercase; }
+    .brand-logo-container:hover { transform: scale(1.02); }
+    .brand-logo-img { height: 26px; width: auto; display: block; }
+    .brand-subtitle { font-size: 10px; font-weight: 700; letter-spacing: 2px; color: #777; text-transform: uppercase; }
 
+    /* Breadcrumbs / Menú de navegación pequeño */
     .breadcrumb-container { display: flex; justify-content: center; margin-bottom: 25px; }
     .breadcrumb {
       display: inline-flex;
       align-items: center;
       gap: 6px;
       background: #ffffff;
-      padding: 8px 18px;
+      padding: 6px 16px;
       border-radius: 30px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
       border: 1px solid #eaeaea;
-      font-size: 13px;
-      color: #666;
+      font-size: 12px;
+      color: #888;
       flex-wrap: wrap;
     }
     .breadcrumb span { cursor: pointer; color: #111; font-weight: 600; transition: color 0.2s; }
     .breadcrumb span:hover { color: #e60000; }
-    .breadcrumb-separator { color: #ccc; font-size: 11px; }
+    .breadcrumb-separator { color: #ccc; font-size: 10px; }
 
+    /* Carpetas en Píldora */
     .folders-grid {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 10px;
-      margin-bottom: 35px;
+      gap: 8px;
+      margin-bottom: 30px;
       max-width: 1200px;
       margin-left: auto;
       margin-right: auto;
@@ -64,37 +66,37 @@
     .folder-card {
       background: #ffffff;
       border: 1px solid #e0e0e0;
-      border-radius: 24px;
-      padding: 10px 20px;
+      border-radius: 20px;
+      padding: 8px 16px;
       display: flex;
       align-items: center;
       gap: 8px;
       cursor: pointer;
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 600;
       color: #222;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.02);
       transition: all 0.2s ease;
     }
     .folder-card svg {
-      width: 16px; height: 16px; fill: none; stroke: #555;
+      width: 14px; height: 14px; fill: none; stroke: #555;
       stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
-      transition: stroke 0.2s ease;
     }
     .folder-card:hover {
       background: #111; color: #fff; border-color: #111;
-      transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+      transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
     .folder-card:hover svg { stroke: #fff; }
 
-    .masonry-grid { column-count: 4; column-gap: 20px; max-width: 1400px; margin: 0 auto; }
+    /* Grilla estilo Pinterest */
+    .masonry-grid { column-count: 4; column-gap: 18px; max-width: 1400px; margin: 0 auto; }
     @media (max-width: 1200px) { .masonry-grid { column-count: 3; } }
-    @media (max-width: 850px)  { .masonry-grid { column-count: 2; column-gap: 15px; } }
+    @media (max-width: 850px)  { .masonry-grid { column-count: 2; column-gap: 12px; } }
     @media (max-width: 500px)  { .masonry-grid { column-count: 1; } }
 
     .card {
       break-inside: avoid;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
       background: transparent;
       cursor: pointer;
       display: flex;
@@ -105,127 +107,123 @@
       position: relative;
       overflow: hidden;
       width: 100%;
-      border-radius: 18px;
+      border-radius: 16px;
       background-color: #111;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
     }
 
-    .card img {
-      width: 100%; height: auto; display: block;
-      transition: transform 0.4s ease;
-    }
-    
-    .card-video-iframe {
-      width: 100%; aspect-ratio: 9 / 16;
-      border: none; display: block; pointer-events: none;
-    }
-    
+    .card img { width: 100%; height: auto; display: block; transition: transform 0.3s ease; }
+    .card-video-iframe { width: 100%; aspect-ratio: 9 / 16; border: none; display: block; pointer-events: none; }
     .card:hover img, .card:hover .card-video-iframe { transform: scale(1.02); }
 
     .card-overlay {
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
+      position: absolute; top: 0; left: 0; right: 0; bottom: 0;
       background: rgba(0,0,0,0.15);
       display: flex; align-items: flex-end; justify-content: flex-end;
-      padding: 15px; opacity: 0; transition: opacity 0.25s ease; z-index: 2;
+      padding: 12px; opacity: 0; transition: opacity 0.2s ease; z-index: 2;
     }
     .card:hover .card-overlay { opacity: 1; }
-    
     .view-btn {
-      background: #e60000; color: #fff; font-size: 12px; font-weight: 700;
-      padding: 8px 16px; border-radius: 20px; box-shadow: 0 4px 12px rgba(230,0,0,0.4);
+      background: #e60000; color: #fff; font-size: 11px; font-weight: 700;
+      padding: 6px 14px; border-radius: 20px; box-shadow: 0 4px 10px rgba(230,0,0,0.4);
     }
 
-    .card-title { font-size: 13px; font-weight: 600; color: #333; margin-top: 10px; padding-left: 2px; }
+    .card-title { font-size: 12px; font-weight: 600; color: #333; margin-top: 8px; padding-left: 2px; }
 
-    /* Modal Adaptativo y Dinámico */
+    /* Modal Adaptativo Fluido */
     .modal-backdrop {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0, 0, 0, 0.75); backdrop-filter: blur(8px);
+      background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(8px);
       display: flex; align-items: center; justify-content: center;
       z-index: 9999; opacity: 0; pointer-events: none;
-      transition: opacity 0.3s ease; padding: 20px;
+      transition: opacity 0.25s ease; padding: 20px;
     }
     .modal-backdrop.active { opacity: 1; pointer-events: auto; }
 
     .modal-card {
       background: #ffffff; border-radius: 24px;
-      max-width: 950px; width: 100%; max-height: 90vh;
+      max-width: 900px; width: 100%; max-height: 90vh;
       display: flex; overflow: hidden;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.4); position: relative;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.5); position: relative;
+      transition: max-width 0.3s ease;
     }
-    @media (max-width: 750px) { .modal-card { flex-direction: column; max-height: 90vh; overflow-y: auto; } }
+    
+    /* Adaptación si es video vertical */
+    .modal-card.is-vertical {
+      max-width: 700px;
+    }
 
-    /* Ajuste para que el video no se corte */
+    @media (max-width: 750px) {
+      .modal-card { flex-direction: column; max-height: 92vh; overflow-y: auto; }
+      .modal-card.is-vertical { max-width: 100%; }
+    }
+
     .modal-media-container {
-      flex: 1.4; background: #000;
+      flex: 1.2; background: #000;
       display: flex; align-items: center; justify-content: center;
-      overflow: hidden; position: relative; min-height: 400px;
+      position: relative; overflow: hidden; min-height: 380px;
     }
     
     .modal-media-container img { width: 100%; height: 100%; object-fit: contain; max-height: 80vh; }
     
-    /* El iframe del video se fuerza en proporciones de Reels/TikTok completas */
+    /* El iframe ahora se escala perfecto sin recortes */
     .modal-media-container iframe {
-      width: 100%; height: 100%; min-height: 550px; border: none; display: block;
+      width: 100%; height: 100%; border: none; display: block;
+      min-height: 520px;
     }
 
     .modal-content {
-      flex: 1; padding: 35px 30px;
+      flex: 1; padding: 30px 25px;
       display: flex; flex-direction: column; justify-content: space-between;
       min-width: 280px;
     }
     
     .modal-close {
-      position: absolute; top: 15px; right: 15px;
-      background: #f0f0f0; border: none;
-      width: 32px; height: 32px; border-radius: 50%;
+      position: absolute; top: 12px; right: 12px;
+      background: #ffffff; border: none;
+      width: 30px; height: 30px; border-radius: 50%;
       cursor: pointer; font-weight: bold;
       display: flex; align-items: center; justify-content: center;
-      z-index: 10; transition: background 0.2s;
+      z-index: 10; box-shadow: 0 2px 8px rgba(0,0,0,0.2);
     }
-    .modal-close:hover { background: #e0e0e0; }
+    .modal-close:hover { background: #f0f0f0; }
 
-    .modal-header h3 { font-size: 18px; font-weight: 700; color: #111; margin-bottom: 10px; word-break: break-word; }
-    .modal-header p { font-size: 13px; color: #666; line-height: 1.5; }
+    .modal-header h3 { font-size: 16px; font-weight: 700; color: #111; margin-bottom: 8px; word-break: break-word; }
+    .modal-header p { font-size: 12px; color: #666; line-height: 1.5; }
 
-    .modal-actions {
-      display: flex; gap: 10px; margin-top: 20px;
-    }
+    .modal-actions { display: flex; gap: 10px; margin-top: 20px; }
 
     .modal-download-btn {
-      flex: 1;
-      background: #e60000; color: #ffffff; text-decoration: none;
-      text-align: center; padding: 14px; border-radius: 30px;
-      font-size: 13px; font-weight: 700;
-      box-shadow: 0 6px 18px rgba(230,0,0,0.3); transition: background 0.2s;
+      flex: 1; background: #e60000; color: #ffffff; text-decoration: none;
+      text-align: center; padding: 12px; border-radius: 30px;
+      font-size: 12px; font-weight: 700;
+      box-shadow: 0 4px 14px rgba(230,0,0,0.3); transition: background 0.2s;
       display: flex; align-items: center; justify-content: center;
     }
     .modal-download-btn:hover { background: #cc0000; }
 
     .modal-share-btn {
       background: #111111; color: #ffffff; border: none;
-      padding: 14px 20px; border-radius: 30px;
-      font-size: 13px; font-weight: 700; cursor: pointer;
+      padding: 12px 18px; border-radius: 30px;
+      font-size: 12px; font-weight: 700; cursor: pointer;
       display: flex; align-items: center; gap: 6px;
-      transition: background 0.2s, transform 0.1s;
     }
     .modal-share-btn:hover { background: #333333; }
-    .modal-share-btn svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .modal-share-btn svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2; }
 
     .toast-notification {
       position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px);
-      background: #111; color: #fff; padding: 12px 24px; border-radius: 30px;
-      font-size: 13px; font-weight: 600; box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+      background: #111; color: #fff; padding: 10px 22px; border-radius: 30px;
+      font-size: 12px; font-weight: 600; box-shadow: 0 8px 25px rgba(0,0,0,0.2);
       opacity: 0; transition: all 0.3s ease; z-index: 10000; pointer-events: none;
     }
     .toast-notification.active { transform: translateX(-50%) translateY(0); opacity: 1; }
 
-    #loading { text-align: center; color: #888; margin-top: 60px; font-weight: 500; font-size: 15px; }
+    #loading { text-align: center; color: #888; margin-top: 50px; font-weight: 500; font-size: 14px; }
     .spinner {
-      width: 32px; height: 32px;
+      width: 28px; height: 28px;
       border: 3px solid #eee; border-top: 3px solid #111;
-      border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 15px auto;
+      border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 12px auto;
     }
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
   </style>
@@ -253,7 +251,7 @@
 
   <!-- Modal -->
   <div class="modal-backdrop" id="modal-backdrop" onclick="closeModal(event)">
-    <div class="modal-card" onclick="event.stopPropagation()">
+    <div class="modal-card" id="modal-card" onclick="event.stopPropagation()">
       <button class="modal-close" onclick="closeModal()">✕</button>
       <div class="modal-media-container" id="modal-media-box"></div>
       <div class="modal-content">
@@ -288,7 +286,7 @@
       </svg>
     `;
 
-    async function loadFolder(folderId = null) {
+    async function loadFolder(folderId = null, isNavigatingHistory = false) {
       const loading = document.getElementById('loading');
       const foldersContainer = document.getElementById('folders-container');
       const filesContainer = document.getElementById('files-container');
@@ -318,6 +316,12 @@
               allFilesFlatList.push(f);
             }
           });
+        }
+
+        // Historial del navegador (Atrás / Adelante)
+        if (!isNavigatingHistory) {
+          const stateUrl = folderId ? `?folderId=${folderId}` : location.pathname;
+          history.pushState({ folderId: folderId, modalId: null, stack: [...historyStack] }, '', stateUrl);
         }
 
         checkUrlParamAndOpenModal();
@@ -384,13 +388,17 @@
       });
     }
 
-    function openModal(file) {
+    function openModal(file, isNavigatingHistory = false) {
       currentOpenedFile = file;
       const box = document.getElementById('modal-media-box');
+      const modalCard = document.getElementById('modal-card');
+
       if (file.isVideo) {
+        modalCard.classList.add('is-vertical');
         const embedUrl = `https://drive.google.com/file/d/${file.id}/preview`;
         box.innerHTML = `<iframe src="${embedUrl}" allow="autoplay"></iframe>`;
       } else {
+        modalCard.classList.remove('is-vertical');
         box.innerHTML = `<img src="${file.previewUrl}" alt="${file.name}">`;
       }
 
@@ -398,51 +406,63 @@
       document.getElementById('modal-download').href = file.downloadUrl;
       document.getElementById('modal-backdrop').classList.add('active');
 
-      const newUrl = `${window.location.origin}${window.location.pathname}?id=${file.id}`;
-      window.history.pushState({ path: newUrl }, '', newUrl);
+      if (!isNavigatingHistory) {
+        const currentFolderId = historyStack[historyStack.length - 1]?.id;
+        const newUrl = `?id=${file.id}`;
+        history.pushState({ folderId: currentFolderId, modalId: file.id, stack: [...historyStack] }, '', newUrl);
+      }
     }
 
-    function closeModal(e) {
-      if (!e || e.target.id === 'modal-backdrop' || e.target.className === 'modal-close') {
+    function closeModal(e, isNavigatingHistory = false) {
+      if (!e || e.target.id === 'modal-backdrop' || e.target.className === 'modal-close' || isNavigatingHistory) {
         document.getElementById('modal-backdrop').classList.remove('active');
         document.getElementById('modal-media-box').innerHTML = '';
         currentOpenedFile = null;
 
-        const cleanUrl = `${window.location.origin}${window.location.pathname}`;
-        window.history.pushState({ path: cleanUrl }, '', cleanUrl);
+        if (!isNavigatingHistory) {
+          const currentFolderId = historyStack[historyStack.length - 1]?.id;
+          const cleanUrl = currentFolderId ? `?folderId=${currentFolderId}` : location.pathname;
+          history.pushState({ folderId: currentFolderId, modalId: null, stack: [...historyStack] }, '', cleanUrl);
+        }
       }
     }
 
-    /* Método infalible para copiar/compartir enlaces */
+    /* Manejador inteligente de la flecha "Atrás / Adelante" */
+    window.onpopstate = function(event) {
+      if (document.getElementById('modal-backdrop').classList.contains('active')) {
+        closeModal(null, true);
+        return;
+      }
+
+      if (event.state && event.state.stack) {
+        historyStack = event.state.stack;
+        const targetFolder = historyStack[historyStack.length - 1];
+        loadFolder(targetFolder ? targetFolder.id : null, true);
+      } else {
+        navigateToHome(true);
+      }
+    };
+
     function shareCurrentResource() {
       if (!currentOpenedFile) return;
 
       const shareUrl = `${window.location.origin}${window.location.pathname}?id=${currentOpenedFile.id}`;
 
-      // 1. Probar menú nativo (móviles)
       if (navigator.share) {
         navigator.share({
           title: `Vitnik - ${currentOpenedFile.name}`,
           text: `Recurso disponible en Banco de Imágenes Vitnik:`,
           url: shareUrl
-        }).then(() => {
-          showToast('¡Compartido con éxito!');
-        }).catch(() => {
-          copyToClipboardFallback(shareUrl);
-        });
+        }).catch(() => copyToClipboardFallback(shareUrl));
       } else {
-        // 2. Si no hay Web Share API (Escritorio/Navegadores antiguos)
         copyToClipboardFallback(shareUrl);
       }
     }
 
     function copyToClipboardFallback(text) {
       if (navigator.clipboard && window.isSecureContext) {
-        navigator.clipboard.writeText(text).then(() => {
-          showToast('¡Enlace copiado al portapapeles!');
-        }).catch(() => {
-          execCopyFallback(text);
-        });
+        navigator.clipboard.writeText(text).then(() => showToast('¡Enlace copiado al portapapeles!'))
+        .catch(() => execCopyFallback(text));
       } else {
         execCopyFallback(text);
       }
@@ -477,8 +497,8 @@
       const fileId = urlParams.get('id');
       if (fileId && allFilesFlatList.length > 0) {
         const fileToOpen = allFilesFlatList.find(f => f.id === fileId);
-        if (fileToOpen) {
-          openModal(fileToOpen);
+        if (fileToOpen && !currentOpenedFile) {
+          openModal(fileToOpen, true);
         }
       }
     }
@@ -489,13 +509,13 @@
       loadFolder(targetFolder.id);
     }
 
-    function navigateToHome() {
+    function navigateToHome(isNavigatingHistory = false) {
       if (historyStack.length > 0) {
         const home = historyStack[0];
         historyStack = [home];
-        loadFolder(home.id);
+        loadFolder(home.id, isNavigatingHistory);
       } else {
-        loadFolder();
+        loadFolder(null, isNavigatingHistory);
       }
     }
 
