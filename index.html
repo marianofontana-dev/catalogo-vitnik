@@ -10,6 +10,7 @@
   
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
+    
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       background-color: #f8f9fa;
@@ -17,6 +18,8 @@
       padding: 30px 20px;
       -webkit-font-smoothing: antialiased;
     }
+
+    /* Header */
     header { text-align: center; margin-bottom: 30px; }
     .brand-logo {
       cursor: pointer;
@@ -39,13 +42,15 @@
       text-transform: uppercase;
       margin-top: 4px;
     }
+
+    /* Breadcrumbs */
     .breadcrumb-container { display: flex; justify-content: center; margin-bottom: 25px; }
     .breadcrumb {
       display: inline-flex;
       align-items: center;
       gap: 6px;
       background: #ffffff;
-      padding: 8px 16px;
+      padding: 8px 18px;
       border-radius: 30px;
       box-shadow: 0 2px 10px rgba(0,0,0,0.04);
       border: 1px solid #eaeaea;
@@ -57,6 +62,7 @@
     .breadcrumb span:hover { color: #e60000; }
     .breadcrumb-separator { color: #ccc; font-size: 11px; }
 
+    /* Carpetas estilo Píldora */
     .folders-grid {
       display: flex;
       flex-wrap: wrap;
@@ -70,13 +76,13 @@
     .folder-card {
       background: #ffffff;
       border: 1px solid #e2e8f0;
-      border-radius: 16px;
-      padding: 12px 20px;
+      border-radius: 20px;
+      padding: 10px 18px;
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       cursor: pointer;
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 600;
       color: #2d3748;
       box-shadow: 0 2px 6px rgba(0,0,0,0.03);
@@ -90,6 +96,7 @@
       box-shadow: 0 6px 15px rgba(0,0,0,0.1);
     }
 
+    /* Grilla estilo Pinterest */
     .masonry-grid {
       column-count: 4;
       column-gap: 20px;
@@ -100,49 +107,161 @@
     @media (max-width: 850px)  { .masonry-grid { column-count: 2; column-gap: 15px; } }
     @media (max-width: 500px)  { .masonry-grid { column-count: 1; } }
 
+    /* Tarjeta de Producto */
     .card {
       break-inside: avoid;
       margin-bottom: 20px;
-      background: #ffffff;
-      border-radius: 20px;
-      overflow: hidden;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.04);
-      border: 1px solid rgba(0,0,0,0.03);
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      background: transparent;
+      cursor: pointer;
       display: flex;
       flex-direction: column;
     }
-    .card:hover { transform: translateY(-5px); box-shadow: 0 12px 30px rgba(0,0,0,0.12); }
-    .card-img-wrapper { position: relative; overflow: hidden; width: 100%; background-color: #f1f1f1; }
-    .card img { width: 100%; height: auto; display: block; transition: transform 0.4s ease; }
-    .card:hover img { transform: scale(1.04); }
-    .card-info { padding: 16px; display: flex; flex-direction: column; gap: 12px; background: #ffffff; }
-    .card-title { font-size: 13px; font-weight: 600; color: #333333; line-height: 1.4; word-break: break-word; }
-    .download-btn {
-      text-align: center;
-      background: #111111;
-      color: #ffffff;
-      text-decoration: none;
-      padding: 10px 16px;
-      border-radius: 12px;
+    .card-img-wrapper {
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+      border-radius: 16px;
+      background-color: #f1f1f1;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+    }
+    .card img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+    .card:hover img { transform: scale(1.03); }
+
+    /* Botón flotante al pasar el mouse */
+    .card-overlay {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.15);
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-end;
+      padding: 15px;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+    .card:hover .card-overlay { opacity: 1; }
+    
+    .view-btn {
+      background: #e60000;
+      color: #fff;
       font-size: 12px;
+      font-weight: 700;
+      padding: 8px 16px;
+      border-radius: 20px;
+      box-shadow: 0 4px 12px rgba(230,0,0,0.4);
+    }
+
+    .card-title {
+      font-size: 13px;
       font-weight: 600;
-      letter-spacing: 0.5px;
-      transition: all 0.2s ease;
+      color: #333333;
+      margin-top: 10px;
+      padding-left: 2px;
+    }
+
+    /* Modal Estilo Vitnik */
+    .modal-backdrop {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(5px);
       display: flex;
       align-items: center;
       justify-content: center;
+      z-index: 9999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      padding: 20px;
     }
-    .download-btn:hover { background: #333333; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+    .modal-backdrop.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
 
+    .modal-card {
+      background: #ffffff;
+      border-radius: 24px;
+      max-width: 850px;
+      width: 100%;
+      max-height: 85vh;
+      display: flex;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+      position: relative;
+    }
+
+    @media (max-width: 700px) {
+      .modal-card { flex-direction: column; max-height: 90vh; overflow-y: auto; }
+    }
+
+    .modal-img-container {
+      flex: 1.2;
+      background: #f1f1f1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .modal-img-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .modal-content {
+      flex: 1;
+      padding: 35px 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 15px; right: 15px;
+      background: #f0f0f0;
+      border: none;
+      width: 30px; height: 30px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+    .modal-close:hover { background: #e0e0e0; }
+
+    .modal-header h3 { font-size: 18px; font-weight: 700; color: #111; margin-bottom: 10px; }
+    .modal-header p { font-size: 13px; color: #666; line-height: 1.5; }
+
+    .modal-download-btn {
+      background: #e60000;
+      color: #ffffff;
+      text-decoration: none;
+      text-align: center;
+      padding: 14px;
+      border-radius: 30px;
+      font-size: 13px;
+      font-weight: 700;
+      box-shadow: 0 6px 18px rgba(230,0,0,0.3);
+      transition: transform 0.2s, background 0.2s;
+    }
+    .modal-download-btn:hover { background: #cc0000; transform: translateY(-1px); }
+
+    /* Spinner */
     #loading { text-align: center; color: #888; margin-top: 60px; font-weight: 500; font-size: 15px; }
     .spinner {
-      width: 32px;
-      height: 32px;
-      border: 3px solid #eee;
-      border-top: 3px solid #111;
-      border-radius: 50%;
-      animation: spin 0.8s linear infinite;
+      width: 32px; height: 32px;
+      border: 3px solid #eee; border-top: 3px solid #111;
+      border-radius: 50%; animation: spin 0.8s linear infinite;
       margin: 0 auto 15px auto;
     }
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
@@ -166,7 +285,24 @@
   
   <div id="loading">
     <div class="spinner"></div>
-    Cargando contenido...
+    Cargando catálogo...
+  </div>
+
+  <!-- Modal Emergente -->
+  <div class="modal-backdrop" id="modal-backdrop" onclick="closeModal(event)">
+    <div class="modal-card" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <div class="modal-img-container">
+        <img id="modal-img" src="" alt="">
+      </div>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 id="modal-title">Nombre del recurso</h3>
+          <p>Material gráfico en alta resolución para uso en redes sociales y catálogo comercial Vitnik.</p>
+        </div>
+        <a id="modal-download" href="#" target="_blank" class="modal-download-btn">Descargar recurso original</a>
+      </div>
+    </div>
   </div>
 
   <script>
@@ -199,7 +335,7 @@
         renderFiles(data.files || []);
 
       } catch (err) {
-        loading.innerHTML = 'Error al cargar los datos de Google Drive.';
+        loading.innerHTML = 'Error al cargar el catálogo de Google Drive.';
       }
     }
 
@@ -237,17 +373,31 @@
       files.forEach(file => {
         const card = document.createElement('div');
         card.className = 'card';
+        card.onclick = () => openModal(file);
         card.innerHTML = `
           <div class="card-img-wrapper">
             <img src="${file.previewUrl}" alt="${file.name}" loading="lazy" onerror="this.src='https://via.placeholder.com/400x600?text=Vista+Previa'">
+            <div class="card-overlay">
+              <span class="view-btn">Ver / Descargar</span>
+            </div>
           </div>
-          <div class="card-info">
-            <div class="card-title">${file.name}</div>
-            <a href="${file.downloadUrl}" target="_blank" class="download-btn">Descargar</a>
-          </div>
+          <div class="card-title">${file.name}</div>
         `;
         container.appendChild(card);
       });
+    }
+
+    function openModal(file) {
+      document.getElementById('modal-img').src = file.previewUrl;
+      document.getElementById('modal-title').textContent = file.name;
+      document.getElementById('modal-download').href = file.downloadUrl;
+      document.getElementById('modal-backdrop').classList.add('active');
+    }
+
+    function closeModal(e) {
+      if (!e || e.target.id === 'modal-backdrop' || e.target.className === 'modal-close') {
+        document.getElementById('modal-backdrop').classList.remove('active');
+      }
     }
 
     function navigateToIndex(index) {
